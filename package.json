@@ -2,6 +2,11 @@
   "name": "ng-units",
   "version": "0.0.0",
   "license": "MIT",
+  "description": "Angular component library for units of measurement",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hansmaad/ng-units.git"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,9 +14,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "packagr": "ng-packagr -p ng-package.json"
+    "pack": "ng-packagr -p ng-package.json"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "^5.2.0",
     "@angular/common": "^5.2.0",
