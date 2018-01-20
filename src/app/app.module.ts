@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { NgUnitsModule } from './modules/ng-units/ng-units.module';
+import { NgUnitsModule } from '../../public_api';
 
 @NgModule({
   declarations: [
@@ -10,7 +10,7 @@ import { NgUnitsModule } from './modules/ng-units/ng-units.module';
   ],
   imports: [
     BrowserModule,
-    NgUnitsModule
+    NgUnitsModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

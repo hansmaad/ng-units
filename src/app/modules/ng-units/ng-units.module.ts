@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuantityPipe } from './quantity.pipe';
+import { QuantityService } from './quantity.service';
 
 @NgModule({
   imports: [
@@ -11,4 +12,12 @@ import { QuantityPipe } from './quantity.pipe';
     QuantityPipe
   ]
 })
-export class NgUnitsModule { }
+export class NgUnitsModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: NgUnitsModule,
+      providers: [QuantityService]
+    }
+  }
+
+ }

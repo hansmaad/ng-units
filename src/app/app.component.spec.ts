@@ -18,10 +18,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it('should render 123 unit', async(() => {
+  it('should render 246', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('#pipe-test-1').textContent).toContain('123 unit');
+    expect(compiled.querySelector('#pipe-test-1').textContent).toContain('246');
   }));
 });
