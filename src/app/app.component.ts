@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Quantity } from '../../public_api';
+import { Quantity, length } from '../../public_api';
 
 @Component({
   selector: 'ng-root',
@@ -8,15 +8,9 @@ import { Quantity } from '../../public_api';
 })
 export class AppComponent {
   title = 'ng';
-  quantity = new Quantity();
+  quantity = new Quantity(length);
 
   constructor() {
-    let unit = {
-      fromBase: (v) => {
-        return 2*v;
-      }
-    }
-    this.quantity.units.push(unit);
-    this.quantity.unit = unit;
+    
   }
 }

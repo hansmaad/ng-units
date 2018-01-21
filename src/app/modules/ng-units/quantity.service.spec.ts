@@ -2,6 +2,8 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { QuantityService } from './quantity.service';
 
+import { length } from './quantities/length';
+
 describe('QuantityService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
