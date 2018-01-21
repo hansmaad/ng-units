@@ -5,20 +5,24 @@ import { length } from './quantities/length';
 describe('QuantityPipe', () => {
 
   let quantity: Quantity;
+  let pipe: QuantityPipe;
 
   beforeEach(() => {
+    pipe = new QuantityPipe();
     quantity = new Quantity(length);
     quantity.unit = quantity.units.find(u => u.symbol == 'mm');
   });
 
   it('create an instance', () => {
-    const pipe = new QuantityPipe();
     expect(pipe).toBeTruthy();
   });
 
   it('should convert from base', () => {
-    const pipe = new QuantityPipe();
-    expect(pipe.transform(2, quantity)).toBe(2000);
+    expect(pipe.transform(2, quantity)).toBe('2000');
   });
+
+  it('should add unit symbol', () => {
+    expect(pipe.transform(2, quantity, true)).toBe('2000 mm');
+  })
 
 });

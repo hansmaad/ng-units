@@ -6,8 +6,9 @@ import { Quantity } from './quantity';
 })
 export class QuantityPipe implements PipeTransform {
 
-  transform(value: string|number, quantity: Quantity): any {
-    return quantity ? quantity.fromBase(value) : value;
+  transform(value: string|number, quantity: Quantity, addSymbol?: boolean): any {
+    value = quantity ? quantity.fromBase(value) : value;
+    return addSymbol ? value + ' ' + quantity.unit.symbol : value;
   }
 
 }

@@ -24,10 +24,10 @@ export class Quantity {
         }
     }
 
-    fromBase(value: string|number): number {
+    fromBase(value: string|number): string {
 
         let num = Number(value);
-        return this.unit.fromBase(num);
+        return '' + this.unit.fromBase(num);
 
     }
 
