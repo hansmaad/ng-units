@@ -10,7 +10,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build -prod --base-href /ng-units/",
+    "build": "ng build -prod --base-href /ng-units/ --output-hashing=none",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
