@@ -21,7 +21,8 @@ export class Quantity {
     constructor(definition?: QuantityDefinition) {
         if (definition) {
             this.name = definition.name;
-            for (let [symbol, def] of Object.entries(definition.units)) {
+            for (let symbol of Object.keys(definition.units)) {
+                let def = definition.units[symbol];
                 this.units.push(new SimpleUnit(symbol, def[0], def[1]));
             }
             this.unit = this.units[0];
