@@ -11,6 +11,6 @@ export class AppComponent {
   quantity = new Quantity(length);
 
   constructor() {
-    
+    this.quantity.selectUnit('mm');
   }
 }
