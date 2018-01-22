@@ -1,14 +1,20 @@
 import { TestBed, async } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { QuantityPipe } from './modules/ng-units/quantity.pipe';
+import { QuantityPipe, QuantityDirective, QuantityService } from '../../public_api';
+
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [
-        AppComponent, QuantityPipe
+        AppComponent, QuantityPipe, QuantityDirective
       ],
+      providers: [
+        QuantityService
+      ]
     }).compileComponents();
   }));
 

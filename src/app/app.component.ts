@@ -9,6 +9,7 @@ import { Quantity, length } from '../../public_api';
 export class AppComponent {
   title = 'ng';
   quantity = new Quantity(length);
+  value = 123;
 
   constructor() {
     this.quantity.selectUnit('mm');
