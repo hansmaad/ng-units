@@ -1,28 +1,60 @@
+<div class="container" style="padding-left: 0; padding-right: 0;">
+  <header class="navbar navbar-light navbar-fixed-top navbar-expand-md">
 
-<div style="text-align:center">
-  <h1>
-    Welcome to ng-units!
-  </h1>
-</div>
-<h2></h2>
+    <a class="navbar-brand" href="#/">ng-units</a>
 
-<div class="form-group">
-    <label for="select-unit">Select unit</label>
-    <select class="form-control"  id="select-unit" [(ngModel)]="quantity.unit" name="unit">
-      <option *ngFor="let u of quantity.units" [ngValue]="u">{{u.symbol}}</option>
-    </select>
+
+    <div class="" id="navbarContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#/getting-started">Getting Started</a>
+        </li>
+      </ul>
+    </div>
+  </header>
 </div>
-<div class="form-group">
-    <label for="value-raw">Raw value</label>
-    <input id="value-raw" type="number" [(ngModel)]="value">
+
+<main class="mainhead">
+  <div class="container">
+    <img alt="ng-units logo" class="" src="img/logo.svg">
+    <p class="lead d-none d-md-block">
+      Angular Units
+    </p>
+    <p>Component library for units of measurement.</p>
+    <p class="lead">
+      <a class="btn btn-outline-primary" href="#/getting-started">Getting Started</a>
+    </p>
   </div>
+</main>
 
-<div class="form-group">
-  <label for="value-length">Value with ngQuantity</label>
-  <input id="value-length" type="number" [(ngModel)]="value" [ngQuantity]="quantity">
-</div>
+<section class="container">
+  <form>
+    <div class="form-group">
+      <label for="select-unit">Select unit</label>
+      <select class="form-control" id="select-unit" [(ngModel)]="quantity.unit" name="unit">
+        <option *ngFor="let u of quantity.units" [ngValue]="u">{{u.symbol}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="value-raw">Raw value</label>
+      <input id="value-raw" name="valueRaw" class="form-control" type="number" [(ngModel)]="value">
+    </div>
 
-<div class="form-group">
-    <label for="pipe-test-1">Value with ngQuantity pipe</label>
-    <div id="pipe-test-1">{{ value | ngQuantity:quantity:true }}</div>
-</div>
+    <div class="form-group">
+      <label for="value-length">Value with ngQuantity</label>
+      <input id="value-length" name="valueLength" class="form-control" type="number" 
+        [(ngModel)]="value" [ngQuantity]="quantity">
+    </div>
+
+    <div class="form-group">
+      <label for="pipe-test-1">Value with ngQuantity pipe</label>
+      <div id="pipe-test-1">{{ value | ngQuantity:quantity:true }}</div>
+    </div>
+  </form>
+</section>
+
+
+<footer class="mainfooter">
+  <div class="container">
+  </div>
+</footer>
