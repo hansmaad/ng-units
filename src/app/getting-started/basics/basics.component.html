@@ -1,5 +1,5 @@
 <form>
-  <div class="form-group">
+  <div class="form-group" *ngIf="quantity">
     <label for="select-unit">Select unit</label>
     <select class="form-control" id="select-unit" [(ngModel)]="quantity.unit" name="unit">
       <option *ngFor="let u of quantity.units" [ngValue]="u">{{u.symbol}}</option>
