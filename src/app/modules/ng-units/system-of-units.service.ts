@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Quantity } from './quantity';
 
 @Injectable()
-export class QuantityService {
+export class SystemOfUnits {
 
     quantities: Quantity[] = [];
 

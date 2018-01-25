@@ -3,7 +3,8 @@ import { Quantity } from './quantity';
 import { length } from './quantities/length';
 import { Component } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { QuantityService } from './quantity.service';
+import { SystemOfUnits } from './system-of-units.service';
+
 
 
 @Component({
@@ -21,7 +22,7 @@ describe('QuantityPipe', () => {
     let pipe: QuantityPipe;
 
     beforeEach(() => {
-        pipe = new QuantityPipe(new QuantityService());
+        pipe = new QuantityPipe(new SystemOfUnits());
         quantity = new Quantity(length);
         quantity.selectUnit('mm');
     });
@@ -54,7 +55,7 @@ describe('QuantityPipe', () => {
         beforeEach(() => {
             fixture = TestBed.configureTestingModule({
                 declarations: [ QuantityPipe, QuantityPipeTestComponent ],
-                providers: [QuantityService]
+                providers: [SystemOfUnits]
               })
               .createComponent(QuantityPipeTestComponent);
               fixture.detectChanges(); 

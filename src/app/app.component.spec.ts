@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { QuantityPipe, QuantityDirective, QuantityService } from '../../public_api';
+import { QuantityPipe, QuantityDirective, SystemOfUnits } from '../../public_api';
 import { BasicsComponent } from './getting-started/basics/basics.component';
 
 
@@ -13,7 +13,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent, QuantityPipe, QuantityDirective, BasicsComponent
       ],
-      providers: [ QuantityService ]
+      providers: [ SystemOfUnits ]
     }).compileComponents();
   }));
 

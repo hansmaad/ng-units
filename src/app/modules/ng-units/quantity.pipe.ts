@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Quantity } from './quantity';
-import { QuantityService } from './quantity.service';
+import { SystemOfUnits } from './system-of-units.service';
 
 @Pipe({
     name: 'ngQuantity',
@@ -8,7 +8,7 @@ import { QuantityService } from './quantity.service';
 })
 export class QuantityPipe implements PipeTransform {
 
-    constructor(service: QuantityService) {
+    constructor(service: SystemOfUnits) {
     }
 
     transform(value: string | number, quantity?: Quantity, addSymbol?: boolean): any {

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { NgUnitsModule, QuantityService } from '../../public_api';
+import { NgUnitsModule } from '../../public_api';
 import { BasicsComponent } from './getting-started/basics/basics.component';
 
 

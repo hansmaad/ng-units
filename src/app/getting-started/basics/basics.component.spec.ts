@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BasicsComponent } from './basics.component';
 import { FormsModule } from '@angular/forms';
-import { QuantityService, NgUnitsModule } from '../../../../public_api';
+import { SystemOfUnits, NgUnitsModule } from '../../../../public_api';
 
 describe('BasicsComponent', () => {
   let component: BasicsComponent;
@@ -12,7 +12,7 @@ describe('BasicsComponent', () => {
     TestBed.configureTestingModule({
       imports: [ FormsModule, NgUnitsModule ],
       declarations: [ BasicsComponent ],
-      providers: [ QuantityService ]
+      providers: [ SystemOfUnits ]
     })
     .compileComponents();
   }));

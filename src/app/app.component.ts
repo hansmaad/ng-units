@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Quantity, length, QuantityService } from '../../public_api';
+import { Quantity, length } from '../../public_api';
 
 
 @Component({

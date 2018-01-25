@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { QuantityService } from "./quantity.service";
 import { Quantity } from "./quantity";
+import { SystemOfUnits } from './system-of-units.service';
 
 
 const CONTROL_VALUE_ACCESSOR = {
@@ -42,7 +42,7 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, DoCheck 
   private currentUnit: string;
   private currentModelValue;
 
-  constructor(private elementRef: ElementRef, private service: QuantityService) {
+  constructor(private elementRef: ElementRef, private service: SystemOfUnits) {
 
   }
 
