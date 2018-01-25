@@ -5,6 +5,18 @@
     text-align: center;
     color: #efefef;
 
-    background-color: #0143a3;
-    background: linear-gradient(135deg,#0143a3,#0273d4);
+    background-color: #0e6157;
+    background: linear-gradient(135deg, #0e6157, #2a6156);
+
+    .btn-outline-primary {
+        color: #fff;
+        border-color: #fff;
+        &:hover {
+            background:#fff;
+            color:#0e6157;
+        }
+    }
+    .title1 {
+        font-size: 2rem;
+    }
 }

@@ -1,17 +1,14 @@
 import { Component } from '@angular/core';
-import { Quantity, length } from '../../public_api';
+import { Quantity, length, QuantityService } from '../../public_api';
+
 
 @Component({
   selector: 'ng-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: []
 })
 export class AppComponent {
-  title = 'ng';
-  quantity = new Quantity(length);
-  value = 123;
 
-  constructor() {
-    this.quantity.selectUnit('mm');
-  }
+
 }

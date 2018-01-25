@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { QuantityPipe, QuantityDirective, QuantityService } from '../../public_api';
+import { BasicsComponent } from './getting-started/basics/basics.component';
 
 
 describe('AppComponent', () => {
@@ -10,11 +11,9 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [ FormsModule ],
       declarations: [
-        AppComponent, QuantityPipe, QuantityDirective
+        AppComponent, QuantityPipe, QuantityDirective, BasicsComponent
       ],
-      providers: [
-        QuantityService
-      ]
+      providers: [ QuantityService ]
     }).compileComponents();
   }));
 

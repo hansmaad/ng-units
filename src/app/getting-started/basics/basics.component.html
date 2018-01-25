@@ -1,0 +1,23 @@
+<form>
+  <div class="form-group">
+    <label for="select-unit">Select unit</label>
+    <select class="form-control" id="select-unit" [(ngModel)]="quantity.unit" name="unit">
+      <option *ngFor="let u of quantity.units" [ngValue]="u">{{u.symbol}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="value-raw">Raw value</label>
+    <input id="value-raw" name="valueRaw" class="form-control" type="number" [(ngModel)]="value">
+  </div>
+
+  <div class="form-group">
+    <label for="value-length">Value with ngQuantity</label>
+    <input id="value-length" name="valueLength" class="form-control" type="number" 
+      [(ngModel)]="value" [ngQuantity]="quantity">
+  </div>
+
+  <div class="form-group">
+    <label for="pipe-test-1">Value with ngQuantity pipe</label>
+    <div id="pipe-test-1">{{ value | ngQuantity:quantity:true }}</div>
+  </div>
+</form>

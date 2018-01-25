@@ -4,13 +4,14 @@ import { Quantity } from './quantity';
 @Injectable()
 export class QuantityService {
 
-  quantities: Quantity[] = [];
+    quantities: Quantity[] = [];
 
-  constructor() { }
+    constructor() {
+    }
 
-  get(quantityName: string): Quantity {
-    let quantity = this.quantities.find(q => q.name === quantityName);
-    return quantity;
-  }
+    get(quantityName: string): Quantity {
+        let quantity = this.quantities.find(q => q.name === quantityName);
+        return quantity;
+    }
 
 }
