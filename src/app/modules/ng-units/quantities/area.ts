@@ -1,5 +1,5 @@
 export var area = {
-    name: 'area',
+    name: 'Area',
     units: {
         'm²' : [1],
         'cm²': [10000],
