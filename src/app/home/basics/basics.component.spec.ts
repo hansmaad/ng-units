@@ -26,4 +26,12 @@ describe('BasicsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  
+  it('should render 1.23e+5 mm', async(() => {
+    const fixture = TestBed.createComponent(BasicsComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('#pipe-test-1').textContent).toContain('1.23e+5 mm');
+  }));
 });

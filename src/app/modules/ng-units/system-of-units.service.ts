@@ -7,7 +7,6 @@ export class SystemOfUnits {
     quantities: Quantity[] = [];
 
     constructor() {
-        console.log('ctor')
     }
 
     add(...quantities: Quantity[]) {

@@ -5,6 +5,13 @@ import { QuantityDirective } from './quantity.directive';
 import { SystemOfUnits } from './system-of-units.service';
 import { SystemOfUnitsInitializer, systemOfUnitsProvider } from './system-of-units.service.provider';
 
+
+let factory = () => {
+    let system = new SystemOfUnits();
+
+    return system;
+}
+
 @NgModule({
     imports: [
         CommonModule
@@ -22,7 +29,12 @@ export class NgUnitsModule {
     static forRoot(initializer?: SystemOfUnitsInitializer): ModuleWithProviders {
         return {
             ngModule: NgUnitsModule,
-            providers: [systemOfUnitsProvider(initializer)]
+            providers: [
+                {
+                    provide: SystemOfUnits,
+                    useFactory: factory,
+                    deps: []
+                }]
         }
     }
     static forChild(): ModuleWithProviders {

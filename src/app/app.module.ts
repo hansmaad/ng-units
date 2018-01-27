@@ -4,19 +4,27 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NgUnitsModule } from '../../public_api';
-import { BasicsComponent } from './getting-started/basics/basics.component';
+import { BasicsComponent } from './home/basics/basics.component';
 import { systemOfUnitsInitializer } from './system-of-units-initializer';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HomeComponent } from './home/home.component';
+import { DemoModule } from './demo/demo.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    BasicsComponent
+    HomeComponent,
+    BasicsComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    NgUnitsModule.forRoot(systemOfUnitsInitializer)
+    NgUnitsModule.forRoot(systemOfUnitsInitializer),
+    DemoModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

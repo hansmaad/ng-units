@@ -3,15 +3,18 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { QuantityPipe, QuantityDirective, SystemOfUnits } from '../../public_api';
-import { BasicsComponent } from './getting-started/basics/basics.component';
+import { BasicsComponent } from './home/basics/basics.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HomeComponent } from './home/home.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
+      imports: [ FormsModule, AppRoutingModule ],
       declarations: [
-        AppComponent, QuantityPipe, QuantityDirective, BasicsComponent
+        AppComponent, HomeComponent, PageNotFoundComponent, QuantityPipe, QuantityDirective, BasicsComponent
       ],
       providers: [ SystemOfUnits ]
     }).compileComponents();
@@ -23,10 +26,4 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it('should render 1.23e+5 mm', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('#pipe-test-1').textContent).toContain('1.23e+5 mm');
-  }));
 });

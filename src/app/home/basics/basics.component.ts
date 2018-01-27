@@ -5,12 +5,10 @@ import { systemOfUnitsInitializer } from '../../system-of-units-initializer';
 @Component({
     selector: 'app-basics',
     templateUrl: './basics.component.html',
-    styleUrls: ['./basics.component.scss'],
-    providers: [systemOfUnitsProvider(systemOfUnitsInitializer)]
+    providers: []
 })
 export class BasicsComponent implements OnInit {
 
-    title = 'ng';
     quantity = new Quantity(length);
     value = 123;
 
