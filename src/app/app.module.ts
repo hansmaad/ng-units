@@ -22,7 +22,7 @@ import { DemoModule } from './demo/demo.module';
   imports: [
     BrowserModule,
     FormsModule,
-    NgUnitsModule.forRoot(systemOfUnitsInitializer),
+    NgUnitsModule.forRoot(systemOfUnitsInitializer()),
     DemoModule,
     AppRoutingModule
   ],
