@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { QuantityPipe } from './quantity.pipe';
 import { QuantityDirective } from './quantity.directive';
 import { SystemOfUnits } from './system-of-units.service';
+import { SystemOfUnitsInitializer, systemOfUnitsProvider } from './system-of-units.service.provider';
 
 @NgModule({
     imports: [
@@ -18,10 +19,10 @@ import { SystemOfUnits } from './system-of-units.service';
     ]
 })
 export class NgUnitsModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(initializer?: SystemOfUnitsInitializer): ModuleWithProviders {
         return {
             ngModule: NgUnitsModule,
-            providers: [SystemOfUnits]
+            providers: [systemOfUnitsProvider(initializer)]
         }
     }
     static forChild(): ModuleWithProviders {

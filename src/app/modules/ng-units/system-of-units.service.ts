@@ -7,6 +7,11 @@ export class SystemOfUnits {
     quantities: Quantity[] = [];
 
     constructor() {
+        console.log('ctor')
+    }
+
+    add(...quantities: Quantity[]) {
+        this.quantities.push(...quantities);
     }
 
     get(quantityName: string): Quantity {

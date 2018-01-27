@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Quantity, length } from '../../public_api';
+import { Quantity, length, SystemOfUnits } from '../../public_api';
 
 
 @Component({
@@ -10,5 +10,7 @@ import { Quantity, length } from '../../public_api';
 })
 export class AppComponent {
 
+  constructor(systemOfUnits: SystemOfUnits) {
+  }
 
 }

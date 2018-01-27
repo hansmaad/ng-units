@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Quantity, length, SystemOfUnits } from '../../../../public_api';
+import { Quantity, length, SystemOfUnits, systemOfUnitsProvider } from '../../../../public_api';
+import { systemOfUnitsInitializer } from '../../system-of-units-initializer';
 
 @Component({
     selector: 'app-basics',
     templateUrl: './basics.component.html',
     styleUrls: ['./basics.component.scss'],
-    providers: [SystemOfUnits]
+    providers: [systemOfUnitsProvider(systemOfUnitsInitializer)]
 })
 export class BasicsComponent implements OnInit {
 
