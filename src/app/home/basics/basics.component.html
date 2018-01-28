@@ -19,9 +19,15 @@
   </div>
 
   <div class="form-group">
-    <label for="value-length">Value with ngQuantity</label>
+    <label for="value-length">Value with ngQuantity using local</label>
     <input id="value-length" name="valueLength" class="form-control" type="number" 
       [(ngModel)]="value" [ngQuantity]="quantity">
+  </div>
+
+  <div class="form-group">
+    <label for="value-length-name">Value with ngQuantity using global</label>
+    <input id="value-length-name" name="valueLengthName" class="form-control" type="number" 
+      [(ngModel)]="value" ngQuantity="Length">
   </div>
 
   <div class="form-group">

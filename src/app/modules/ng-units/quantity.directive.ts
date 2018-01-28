@@ -42,20 +42,22 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, DoCheck 
     private currentUnit: string;
     private currentModelValue;
 
-    constructor(private elementRef: ElementRef, private service: SystemOfUnits) {
+    constructor(private elementRef: ElementRef, private system: SystemOfUnits) {
 
     }
 
     ngOnInit(): void {
         this.inputElement = this.getInputElement();
-        // this.quantity = typeof this.quantityAttr === 'string' ? 
-        //     this.service.getQuantity(this.quantityAttr) : this.quantityAttr;
+        this.initQuantity();
+    }
 
-        this.quantity = this.quantityAttr as Quantity;
+    private initQuantity() {
+        this.quantity = typeof this.quantityAttr === 'string' ? 
+            this.system.get(this.quantityAttr) : this.quantityAttr;
     }
 
     ngDoCheck(): void {
-        this.quantity = this.quantityAttr as Quantity;
+        this.initQuantity();
         let newUnit = this.quantity ? this.quantity.unit.symbol : '';
         if (newUnit !== this.currentUnit) {
             this.updateView(this.currentModelValue);

@@ -11,7 +11,7 @@ import { SystemOfUnits } from './system-of-units.service';
     template: `
     <div>
         <div id="by-instance">{{ value | ngQuantity:quantity:true}}</div>
-        <div id="by-name">{{ value | ngQuantity:'length'}}</div>
+        <div id="by-name">{{ value | ngQuantity:'Length'}}</div>
     </div>
     `
 })
@@ -84,11 +84,13 @@ describe('QuantityPipe', () => {
 
     describe('changeDetection', () => {
     
+        let systemQuantity: Quantity;
         let fixture: ComponentFixture<QuantityPipeTestComponent>;
         let byInstance;
         let byName;
         beforeEach(() => {
-            systemOfUnits.add(new Quantity(length));
+            systemQuantity = new Quantity(length);
+            systemOfUnits.add(systemQuantity);
             fixture = TestBed.configureTestingModule({
                 declarations: [ QuantityPipe, QuantityPipeTestComponent ],
                 providers: [{
@@ -98,7 +100,6 @@ describe('QuantityPipe', () => {
               })
               .createComponent(QuantityPipeTestComponent);
               fixture.detectChanges();
-              
               byInstance = fixture.nativeElement.querySelector('#by-instance');
               byName = fixture.nativeElement.querySelector('#by-name');
         });
@@ -114,12 +115,18 @@ describe('QuantityPipe', () => {
             expect(byInstance.textContent).toContain('1000 mm');
         });
 
-        it('should render on unit change', () => {
+        it('should render on unit change for passed by instance', () => {
             fixture.componentInstance.quantity = quantity;
             fixture.detectChanges();
             fixture.componentInstance.quantity.selectUnit('cm');
             fixture.detectChanges();
             expect(byInstance.textContent).toContain('100 cm');
+        });
+
+        it('should render on unit change for passed by name', () => {
+            systemQuantity.selectUnit('cm');
+            fixture.detectChanges();
+            expect(byName.textContent).toContain('100');
         });
     });
 });

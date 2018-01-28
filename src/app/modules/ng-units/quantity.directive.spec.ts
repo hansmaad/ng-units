@@ -12,7 +12,7 @@ import { By } from '@angular/platform-browser';
     template: `
     <div>
     <input id="by-instance" type="number" [(ngModel)]="value" [ngQuantity]="quantity" >
-    <input id="by-name" type="number" [(ngModel)]="value" ngQuantityNO="length" >
+    <input id="by-name" type="number" [(ngModel)]="value" ngQuantity="Length" >
     </div>
     `
 
@@ -25,7 +25,7 @@ class QuantityDirectiveTestComponent {
 describe('QuantityDirective', () => {
 
     let fixture: ComponentFixture<QuantityDirectiveTestComponent>;
-    let input;
+    let byInstance, byName;
 
     beforeEach(() => {
         fixture = TestBed.configureTestingModule({
@@ -35,14 +35,15 @@ describe('QuantityDirective', () => {
           })
           .createComponent(QuantityDirectiveTestComponent);
           fixture.detectChanges(); 
-          input = fixture.debugElement.query(By.css('#by-instance'));
+          byInstance = fixture.debugElement.query(By.css('#by-instance'));
+          byName = fixture.debugElement.query(By.css('#by-name'));
     });
 
     it('should not convert value, if quantity is undefined', async(() => {
         fixture.componentInstance.value = 42;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            expect(input.nativeElement.value).toBe('42');
+            expect(byInstance.nativeElement.value).toBe('42');
         });
     }))
 
@@ -52,7 +53,7 @@ describe('QuantityDirective', () => {
         fixture.componentInstance.value = 42;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            expect(input.nativeElement.value).toBe('4200');
+            expect(byInstance.nativeElement.value).toBe('4200');
         });
     }))
 
