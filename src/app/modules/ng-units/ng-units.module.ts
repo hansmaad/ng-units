@@ -5,11 +5,7 @@ import { QuantityDirective } from './quantity.directive';
 import { SystemOfUnits } from './system-of-units.service';
 import { SystemOfUnitsConfig, systemOfUnitsFactory } from './system-of-units.service.provider';
 
-
-
-
 export const SYSTEM_OF_UNITS_CONFIGURATION = new InjectionToken<SystemOfUnitsConfig>('SYSTEM_OF_UNITS_CONFIGURATION');
-
 
 @NgModule({
     imports: [

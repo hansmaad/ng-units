@@ -10,7 +10,12 @@ import { By } from '@angular/platform-browser';
 
 @Component({
     template: `
-    <input type="number" [(ngModel)]="value" [ngQuantity]="quantity" >`
+    <div>
+    <input id="by-instance" type="number" [(ngModel)]="value" [ngQuantity]="quantity" >
+    <input id="by-name" type="number" [(ngModel)]="value" ngQuantityNO="length" >
+    </div>
+    `
+
 })
 class QuantityDirectiveTestComponent { 
     value = 1;
@@ -30,7 +35,7 @@ describe('QuantityDirective', () => {
           })
           .createComponent(QuantityDirectiveTestComponent);
           fixture.detectChanges(); 
-          input = fixture.debugElement.query(By.css('input'));
+          input = fixture.debugElement.query(By.css('#by-instance'));
     });
 
     it('should not convert value, if quantity is undefined', async(() => {

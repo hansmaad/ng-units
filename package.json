@@ -1,6 +1,6 @@
 {
   "name": "ng-units",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "description": "Angular component library for units of measurement",
   "repository": {

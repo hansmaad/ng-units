@@ -9,7 +9,11 @@ import { SystemOfUnits } from './system-of-units.service';
 
 @Component({
     template: `
-    <div>{{ value | ngQuantity:quantity:true}}</div>`
+    <div>
+        <div id="by-instance">{{ value | ngQuantity:quantity:true}}</div>
+        <div id="by-name">{{ value | ngQuantity:'length'}}</div>
+    </div>
+    `
 })
 class QuantityPipeTestComponent { 
     value = 1;
@@ -20,9 +24,11 @@ describe('QuantityPipe', () => {
 
     let quantity: Quantity;
     let pipe: QuantityPipe;
+    let systemOfUnits: SystemOfUnits;
 
     beforeEach(() => {
-        pipe = new QuantityPipe(new SystemOfUnits());
+        systemOfUnits = new SystemOfUnits();
+        pipe = new QuantityPipe(systemOfUnits);
         quantity = new Quantity(length);
         quantity.selectUnit('mm');
     });
@@ -39,9 +45,36 @@ describe('QuantityPipe', () => {
         expect(pipe.transform(2, quantity)).toBe('2000');
     });
 
+    it('should convert string argument', () => {
+        expect(pipe.transform('2', quantity)).toBe('2000');
+    });
+
     it('should add unit symbol', () => {
         expect(pipe.transform(2, quantity, true)).toBe('2000 mm');
     })
+
+    it('should return argument if quantity name is not in system of units', () => {
+        expect(pipe.transform(2.5, 'length')).toBe(2.5);
+    })
+
+    it('should return string argument if quantity name is not in system of units', () => {
+        expect(pipe.transform('2.5', 'length')).toBe('2.5');
+    })
+
+    it('should convert if quantity name is in system of units', () => {
+        let q = new Quantity(length);
+        systemOfUnits.add(q);
+        q.selectUnit('cm');
+        expect(pipe.transform(2.5, 'Length')).toBe('250');
+    })
+
+    it('should add unit symbol if quantity name is in system of units', () => {
+        let q = new Quantity(length);
+        systemOfUnits.add(q);
+        q.selectUnit('cm');
+        expect(pipe.transform(2.5, 'Length', true)).toBe('250 cm');
+    })
+
 
     it('should use quantity formatter', () => {
         quantity.formatter = (v) => v + 'meow'
@@ -52,23 +85,33 @@ describe('QuantityPipe', () => {
     describe('changeDetection', () => {
     
         let fixture: ComponentFixture<QuantityPipeTestComponent>;
+        let byInstance;
+        let byName;
         beforeEach(() => {
+            systemOfUnits.add(new Quantity(length));
             fixture = TestBed.configureTestingModule({
                 declarations: [ QuantityPipe, QuantityPipeTestComponent ],
-                providers: [SystemOfUnits]
+                providers: [{
+                    provide: SystemOfUnits,
+                    useValue: systemOfUnits
+                }]
               })
               .createComponent(QuantityPipeTestComponent);
-              fixture.detectChanges(); 
+              fixture.detectChanges();
+              
+              byInstance = fixture.nativeElement.querySelector('#by-instance');
+              byName = fixture.nativeElement.querySelector('#by-name');
         });
     
         it('should render', () => {
-            expect(fixture.debugElement.nativeElement.textContent).toContain('1');
+            expect(byInstance.textContent).toContain('1');
+            expect(byName.textContent).toContain('1');
         });
 
         it('should render on quantity change', () => {
             fixture.componentInstance.quantity = quantity;
             fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement.textContent).toContain('1000 mm');
+            expect(byInstance.textContent).toContain('1000 mm');
         });
 
         it('should render on unit change', () => {
@@ -76,7 +119,7 @@ describe('QuantityPipe', () => {
             fixture.detectChanges();
             fixture.componentInstance.quantity.selectUnit('cm');
             fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement.textContent).toContain('100 cm');
+            expect(byInstance.textContent).toContain('100 cm');
         });
     });
 });

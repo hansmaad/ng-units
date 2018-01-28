@@ -9,14 +9,16 @@ import { systemOfUnitsInitializer } from '../../system-of-units-initializer';
 })
 export class BasicsComponent implements OnInit {
 
+    length: Quantity;
     quantity = new Quantity(length);
     value = 123;
 
-    constructor() {
-        this.quantity.selectUnit('mm');
+    constructor(private system: SystemOfUnits) {
     }
 
     ngOnInit() {
+        this.length = this.system.get('Length');
+        this.quantity.selectUnit('mm');
     }
 
 }
