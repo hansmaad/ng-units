@@ -3,10 +3,34 @@
 
 # ng-units
 
+Angular component library for units of measurement. 
 https://hansmaad.github.io/ng-units/
 
+
+
 ## Basic concepts
-todo
+There are many different ways to deal with physical units in software applications. 
+Here is how we do it in ng-units.
+
+At first, some basic terms we use in ng-units:
+ - Quantity: e.g.: Length, Mass, Temperature
+ - Unit: e.g.: meter, kilogram, Kelvin
+ - System of units: A collection of quantities and their units.
+
+When using ng-units, you will store all your model values 
+(and probably all your data on the backend side) 
+based on one single consistent set of **base units**. 
+ng-units uses the SI base units *kg, m, s, A, K, mol, cd* 
+but you're free to define your own quantities by using any base units you like.
+
+Your entire code should handle values based on these base units. 
+When calculating stuff using these values, it's clear that results are also based on
+base units. E.g. when multiplying two length quantites, the result is stored in `m²`.
+The only moment, when we start converting numbers, 
+is to render them to the view or getting input from the view. 
+Both is handled by the components, directive and pipes of ng-units.
+
+
 ## Basic usage
 
 Your app must have at least on `systemOfUnits`. When importing the `NgUnitsModule` into your app module, the `systemOfUnits` provider will be registered into the root injector of your app.
