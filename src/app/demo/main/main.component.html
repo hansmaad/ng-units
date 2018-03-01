@@ -1,7 +1,7 @@
 <h2>Bootstrap input group</h2>
 <p></p>
 <div class="form-group">
-    <label for="todays-temperature">Today's temperature</label>
+    <label for="todays-temperature">Today's temperature ({{value | ngQuantity:'Temperature':true}})</label>
     <div class="input-group">
       <input id="todays-temperature" name="todaysTemperature" class="form-control" type="number" readonly 
              [(ngModel)]="value" ngQuantity="Temperature">
@@ -10,4 +10,3 @@
       </div>
     </div>
 </div>
-

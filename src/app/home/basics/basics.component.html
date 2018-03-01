@@ -1,15 +1,13 @@
 <form>
   <div class="form-group" *ngIf="quantity">
     <label for="select-unit">Select unit for local {{ quantity.name }} instance</label>
-    <select class="form-control" id="select-unit" [(ngModel)]="quantity.unit" name="unit">
-      <option *ngFor="let u of quantity.units" [ngValue]="u">{{u.symbol}}</option>
+    <select class="form-control" id="select-unit" [ngUnitSelect]="quantity" name="unit">
     </select>
   </div>
 
   <div class="form-group" *ngIf="length">
     <label for="select-unit">Select unit for global {{ length.name }} </label>
-    <select class="form-control" id="select-unit-length" [(ngModel)]="length.unit" name="unit-length">
-      <option *ngFor="let u of length.units" [ngValue]="u">{{u.symbol}}</option>
+    <select class="form-control" id="select-unit-length" name="unit-length" ngUnitSelect="Length">
     </select>
   </div>
 

@@ -5,12 +5,16 @@ import {
     HostListener,
     Input,
     OnInit,
-    DoCheck
+    DoCheck,
+    OnChanges,
+    SimpleChanges,
+    OnDestroy
 } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Quantity } from "./quantity";
 import { SystemOfUnits } from './system-of-units.service';
+import { Subscription } from 'rxjs/Subscription';
 
 
 const CONTROL_VALUE_ACCESSOR = {
@@ -26,7 +30,7 @@ const CONTROL_VALUE_ACCESSOR = {
         CONTROL_VALUE_ACCESSOR
     ]
 })
-export class QuantityDirective implements ControlValueAccessor, OnInit, DoCheck {
+export class QuantityDirective implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
 
     @Input()
     formControlName: string;
@@ -41,6 +45,7 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, DoCheck 
     private onModelChange: Function;
     private currentUnit: string;
     private currentModelValue;
+    private subscription: Subscription;
 
     constructor(private elementRef: ElementRef, private system: SystemOfUnits) {
 
@@ -52,16 +57,40 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, DoCheck 
     }
 
     private initQuantity() {
+        this.unsubscribe();
         this.quantity = typeof this.quantityAttr === 'string' ? 
             this.system.get(this.quantityAttr) : this.quantityAttr;
+        this.subscribe();
+        this.updateUnit();
     }
 
-    ngDoCheck(): void {
-        this.initQuantity();
-        let newUnit = this.quantity ? this.quantity.unit.symbol : '';
-        if (newUnit !== this.currentUnit) {
-            this.updateView(this.currentModelValue);
-            this.currentUnit = newUnit;
+    private subscribe() {
+        if (this.quantity) {
+            this.subscription = this.system.subscribe(this.quantity, () => {
+                this.updateUnit();
+            });
+        }
+    }
+
+    private updateUnit() {
+        this.currentUnit = this.quantity ? this.quantity.unit.symbol : '';
+        this.updateView(this.currentModelValue);
+    }
+
+    private unsubscribe() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
+
+    ngOnDestroy(): void {
+        this.unsubscribe();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        let change = changes['quantityAttr'];
+        if (change && !change.isFirstChange()) {
+            this.initQuantity();
         }
     }
 

@@ -1,49 +1,56 @@
-import { Directive, ElementRef, Renderer2, OnInit, Component, Input, forwardRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, Renderer2, OnInit, Component, Input, forwardRef, HostListener, OnDestroy } from '@angular/core';
 import { Quantity } from './quantity';
 import { Unit } from './unit';
 import { SystemOfUnits } from './system-of-units.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  selector: '[ngUnitSelect]',
-  template: `<option *ngFor="let u of quantity?.units">{{u.symbol}}</option>`,
+    selector: '[ngUnitSelect]',
+    template: `<option *ngFor="let u of quantity?.units">{{u.symbol}}</option>`,
 })
-export class UnitSelectComponent implements OnInit {
+export class UnitSelectComponent implements OnInit, OnDestroy {
 
-  @Input('ngUnitSelect')
-  quantityAttr: string | Quantity;
+    @Input('ngUnitSelect')
+    quantityAttr: string | Quantity;
 
-  quantity: Quantity;
+    quantity: Quantity;
 
-  private currentUnit: Unit;
-  private select: HTMLSelectElement;
+    private currentUnit: Unit;
+    private select: HTMLSelectElement;
+    private subscription: Subscription;
 
-  constructor(elementRef: ElementRef, private system: SystemOfUnits) {
-    this.select = elementRef.nativeElement;
-  }
+    constructor(elementRef: ElementRef, private system: SystemOfUnits) {
+        this.select = elementRef.nativeElement;
+    }
 
-  ngOnInit(): void {
-    this.initQuantity();
-    this.currentUnit = this.quantity ? this.quantity.unit: null;
-  }
+    ngOnInit(): void {
+        this.initQuantity();
+        this.selectUnit();
+        this.subscription = this.system.subscribe(this.quantity, (msg) => {
+            this.selectUnit();
+        })
+    }
 
-  private initQuantity() {
-      this.quantity = typeof this.quantityAttr === 'string' ? 
-          this.system.get(this.quantityAttr) : this.quantityAttr;
-  }
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
 
-  @HostListener('change', ['$event'])
-  change(event: Event) {
-    let index = this.select.selectedIndex;
-    this.currentUnit = this.quantity.units[index]
-    this.quantity.selectUnit(this.currentUnit);
-  }
+    private initQuantity() {
+        this.quantity = typeof this.quantityAttr === 'string' ?
+            this.system.get(this.quantityAttr) : this.quantityAttr;
+    }
 
-  ngDoCheck(): void {
-      let newUnit = this.quantity ? this.quantity.unit : null;
-      if (newUnit !== this.currentUnit) {
-        this.select.selectedIndex = this.quantity.units.indexOf(newUnit);
-        this.currentUnit = newUnit;
-      }
-  }
+    private selectUnit() {
+        let quantity = this.quantity;
+        this.currentUnit = quantity ? quantity.unit : null;
+        this.select.selectedIndex = quantity ? quantity.units.indexOf(this.currentUnit): -1;
+    }
+
+    @HostListener('change', ['$event'])
+    change(event: Event) {
+        let index = this.select.selectedIndex;
+        this.currentUnit = this.quantity.units[index]
+        this.system.selectUnit(this.quantity, this.currentUnit);
+    }
 }
 
