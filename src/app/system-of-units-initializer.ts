@@ -1,8 +1,10 @@
-import { SystemOfUnits, Quantity, length, area, SystemOfUnitsConfig } from "../../public_api";
+import { 
+    SystemOfUnits, Quantity, SystemOfUnitsConfig, 
+    length, area, temperature, time } from "../../public_api";
 
 
 export function systemOfUnitsInitializer(): SystemOfUnitsConfig {
     return {
-        quantities: [area, length]
+        quantities: [area, length, time, temperature]
     }
 }
