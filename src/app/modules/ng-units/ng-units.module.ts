@@ -4,6 +4,7 @@ import { QuantityPipe } from './quantity.pipe';
 import { QuantityDirective } from './quantity.directive';
 import { SystemOfUnits } from './system-of-units.service';
 import { SystemOfUnitsConfig, systemOfUnitsFactory } from './system-of-units.service.provider';
+import { UnitSelectComponent } from './unit-select.component';
 
 export const SYSTEM_OF_UNITS_CONFIGURATION = new InjectionToken<SystemOfUnitsConfig>('SYSTEM_OF_UNITS_CONFIGURATION');
 
@@ -13,11 +14,13 @@ export const SYSTEM_OF_UNITS_CONFIGURATION = new InjectionToken<SystemOfUnitsCon
     ],
     declarations: [
         QuantityPipe,
-        QuantityDirective
+        QuantityDirective,
+        UnitSelectComponent
     ],
     exports: [
         QuantityPipe,
-        QuantityDirective
+        QuantityDirective,
+        UnitSelectComponent
     ]
 })
 export class NgUnitsModule {

@@ -1,24 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainComponent } from './main.component';
-import { QuantityPipe, SystemOfUnits, NgUnitsModule } from '../../../../public_api';
+import { UnitSelectComponent } from './unit-select.component';
 import { FormsModule } from '@angular/forms';
+import { SystemOfUnits } from './system-of-units.service';
 
-describe('MainComponent', () => {
-  let component: MainComponent;
-  let fixture: ComponentFixture<MainComponent>;
+describe('UnitSelectComponent', () => {
+  let component: UnitSelectComponent;
+  let fixture: ComponentFixture<UnitSelectComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ FormsModule, NgUnitsModule ],
-      declarations: [ MainComponent ],
+      imports: [FormsModule],
+      declarations: [ UnitSelectComponent ],
       providers: [SystemOfUnits]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainComponent);
+    fixture = TestBed.createComponent(UnitSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

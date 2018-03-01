@@ -5,10 +5,12 @@ import { DemoRoutingModule } from './demo-routing.module';
 import { DemoComponent } from './demo.component';
 import { MainComponent } from './main/main.component';
 import { NgUnitsModule } from '../../../public_api';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     DemoRoutingModule,
     NgUnitsModule.forChild()
   ],
