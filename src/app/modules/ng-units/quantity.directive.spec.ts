@@ -15,7 +15,6 @@ import { By } from '@angular/platform-browser';
     <input id="by-name" type="number" [(ngModel)]="value" ngQuantity="Length" >
     </div>
     `
-
 })
 class QuantityDirectiveTestComponent { 
     value = 1;

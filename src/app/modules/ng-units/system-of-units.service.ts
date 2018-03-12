@@ -29,7 +29,7 @@ export class SystemOfUnits {
         return quantity;
     }
 
-    selectUnit(quantity: Quantity, unit: Unit) {
+    selectUnit(quantity: Quantity, unit: string|Unit) {
         quantity.selectUnit(unit);
         this.broadcast(quantity);
     }

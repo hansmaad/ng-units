@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer2, OnInit, Component, Input, forwardRef, HostListener, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, Renderer2, OnInit, Component, Input, forwardRef, HostListener, OnDestroy, AfterViewInit } from '@angular/core';
 import { Quantity } from './quantity';
 import { Unit } from './unit';
 import { SystemOfUnits } from './system-of-units.service';
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
     selector: '[ngUnitSelect]',
     template: `<option *ngFor="let u of quantity?.units">{{u.symbol}}</option>`,
 })
-export class UnitSelectComponent implements OnInit, OnDestroy {
+export class UnitSelectComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @Input('ngUnitSelect')
     quantityAttr: string | Quantity;
@@ -25,10 +25,13 @@ export class UnitSelectComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.initQuantity();
-        this.selectUnit();
         this.subscription = this.system.subscribe(this.quantity, (msg) => {
             this.selectUnit();
         })
+    }
+
+    ngAfterViewInit(): void {
+        this.selectUnit();
     }
 
     ngOnDestroy(): void {
