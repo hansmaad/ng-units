@@ -1,41 +1,34 @@
+<p>
+  <em>ng-units</em> is a lightweight and flexible Angular 5 component library for applications
+  that need to handle physical units of measurements. You'll keep your model values in
+  a single consistent set of base units, while <em>ng-units</em> takes care of the unit conversion
+  for in- and output of values.
+</p>
+
 <form>
-  <div class="form-group" *ngIf="quantity">
-    <label for="select-unit">Select unit for local {{ quantity.name }} instance</label>
-    <select class="form-control" id="select-unit" [ngUnitSelect]="quantity" name="unit">
-    </select>
+  <div class="row mt-5">
+    <div class="col-sm">
+        <div class="form-group">
+          <label for="value-raw">Your raw model value</label>
+          <input id="value-raw" name="valueRaw" class="form-control" type="number" [(ngModel)]="value">
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="form-group" *ngIf="quantity">
+          <label for="select-unit">Select the unit for {{ quantity.name }}</label>
+          <select class="form-control" id="select-unit" [ngUnitSelect]="quantity" name="unit">
+          </select>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="form-group"  *ngIf="quantity">
+          <label for="value-length">The converted value in {{quantity.unit.symbol}}</label>
+          <input id="value-length" name="valueLength" class="form-control" type="number" 
+            [(ngModel)]="value" [ngQuantity]="quantity">
+        </div>
+    </div>
   </div>
-
-  <div class="form-group" *ngIf="length">
-    <label for="select-unit">Select unit for global {{ length.name }} </label>
-    <select class="form-control" id="select-unit-length" name="unit-length" ngUnitSelect="Length">
-    </select>
+  <div class="text-center mt-4">
+      <div id="pipe-test-1" class="display-4">{{ value | ngQuantity:quantity:true }}</div>
   </div>
-
-  <div class="form-group">
-    <label for="value-raw">Raw value</label>
-    <input id="value-raw" name="valueRaw" class="form-control" type="number" [(ngModel)]="value">
-  </div>
-
-  <div class="form-group">
-    <label for="value-length">Value with ngQuantity using local</label>
-    <input id="value-length" name="valueLength" class="form-control" type="number" 
-      [(ngModel)]="value" [ngQuantity]="quantity">
-  </div>
-
-  <div class="form-group">
-    <label for="value-length-name">Value with ngQuantity using global</label>
-    <input id="value-length-name" name="valueLengthName" class="form-control" type="number" 
-      [(ngModel)]="value" ngQuantity="Length">
-  </div>
-
-  <div class="form-group">
-    <label for="pipe-test-1">Value with ngQuantity pipe using local {{quantity.name}}</label>
-    <div id="pipe-test-1">{{ value | ngQuantity:quantity:true }}</div>
-  </div>
-
-  <div class="form-group" *ngIf="length">
-    <label for="pipe-test-2">Value with ngQuantity pipe using global {{length.name}}</label>
-    <div id="pipe-test-2">{{ value | ngQuantity:'Length':true }}</div>
-  </div>
-
 </form>

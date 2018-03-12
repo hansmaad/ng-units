@@ -28,10 +28,10 @@ describe('BasicsComponent', () => {
   });
 
   
-  it('should render 1.23e+5 mm', async(() => {
+  it('should render 1250 mm', async(() => {
     const fixture = TestBed.createComponent(BasicsComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('#pipe-test-1').textContent).toContain('1.23e+5 mm');
+    expect(compiled.querySelector('#pipe-test-1').textContent).toContain('1250 mm');
   }));
 });
