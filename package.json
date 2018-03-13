@@ -14,7 +14,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "pack": "ng-packagr -p ng-units/package.json"
+    "pack:copy": "cp README.md dist && cp LICENSE dist",
+    "pack": "ng-packagr -p ng-units/package.json && npm run pack:copy"
   },
   "private": true,
   "dependencies": {
