@@ -9,8 +9,8 @@
   },
   "private": false,
   "peerDependencies": {
-    "@angular/core": "^5.2.0",
-    "@angular/common": "^5.2.0"
+    "@angular/core": "^5.2.11",
+    "@angular/common": "^5.2.11"
   },
   "ngPackage": {
     "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
