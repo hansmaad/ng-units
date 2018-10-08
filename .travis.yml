@@ -15,5 +15,5 @@ install:
 script:
   # Use Chromium instead of Chrome.
   - export CHROME_BIN=chromium-browser
-  - xvfb-run -a npm run test -- --watch=false --no-progress --browser=ChromeNoSandbox
+  - xvfb-run -a npm run test -- --watch=false --no-progress --browsers=ChromeNoSandbox
   - npm run pack
