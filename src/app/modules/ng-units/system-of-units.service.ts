@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Quantity } from './quantity';
 import { Unit } from './unit';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/filter';
+import { Subscription, Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 
 export class QuantityMessage {
@@ -35,8 +34,8 @@ export class SystemOfUnits {
     }
 
     subscribe(quantity, callback: (m: QuantityMessage) => any): Subscription {
-        return this.quantityChange
-            .filter(m => m.quantity === quantity)
+        return this.quantityChange.pipe(
+            filter(m => m.quantity === quantity))
             .subscribe(callback);
     }
 

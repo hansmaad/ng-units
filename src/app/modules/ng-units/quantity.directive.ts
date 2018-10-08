@@ -14,7 +14,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Quantity } from "./quantity";
 import { SystemOfUnits } from './system-of-units.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 
 const CONTROL_VALUE_ACCESSOR = {

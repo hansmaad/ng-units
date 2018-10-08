@@ -2,7 +2,7 @@ import { Directive, ElementRef, Renderer2, OnInit, Component, Input, forwardRef,
 import { Quantity } from './quantity';
 import { Unit } from './unit';
 import { SystemOfUnits } from './system-of-units.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: '[ngUnitSelect]',
