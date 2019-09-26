@@ -1,0 +1,66 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+body, html {
+    margin: 0;
+}
+.mainhead {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin-bottom: 4rem;
+    text-align: center;
+    color: #efefef;
+
+    background-color: #0e6157;
+    background: linear-gradient(135deg, #0e6157, #4e9083);
+
+    .btn-outline-primary {
+        color: #fff;
+        border-color: #fff;
+        &:hover {
+            background:#fff;
+            color:#0e6157;
+        }
+    }
+    .title1 {
+        font-size: 2rem;
+    }
+}
+
+.navbar-svg {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    vertical-align: text-top;
+}
+
+.form-group {
+    label {
+        font-weight: 700;
+    }
+    .form-control, .input-group {
+        max-width: 25em;
+        text-align: right;
+    }
+
+    .input-group .input-group-append .custom-select {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+}
+
+$footer-height: 8rem;
+
+body {
+    margin-bottom: $footer-height + 4rem;
+}
+.mainfooter {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 2em 0 0 0;
+    height: $footer-height;
+    background-color: #f5f5f5;
+}
