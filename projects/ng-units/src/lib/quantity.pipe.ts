@@ -11,9 +11,9 @@ export class QuantityPipe implements PipeTransform {
     constructor(private system: SystemOfUnits) {
     }
 
-    transform(value: string | number, 
+    transform(value: string | number,
         quantity?: Quantity | string,
-        addSymbol?: boolean): any 
+        addSymbol?: boolean): any
     {
         if (typeof quantity === 'string') {
             quantity = this.system.get(quantity);

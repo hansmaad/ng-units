@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Quantity } from "./quantity";
+import { Quantity } from './quantity';
 import { SystemOfUnits } from './system-of-units.service';
 import { Subscription } from 'rxjs';
 
@@ -58,7 +58,7 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, OnChange
 
     private initQuantity() {
         this.unsubscribe();
-        this.quantity = typeof this.quantityAttr === 'string' ? 
+        this.quantity = typeof this.quantityAttr === 'string' ?
             this.system.get(this.quantityAttr) : this.quantityAttr;
         this.subscribe();
         this.updateUnit();
@@ -88,7 +88,7 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, OnChange
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        let change = changes['quantityAttr'];
+        const change = changes['quantityAttr'];
         if (change && !change.isFirstChange()) {
             this.initQuantity();
         }
@@ -131,7 +131,7 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, OnChange
             this.inputElement.value = modelValue;
             return;
         }
-        let converted = this.quantity.fromBase(modelValue);
+        const converted = this.quantity.fromBase(modelValue);
         if (converted !== null && converted !== undefined) {
             this.inputElement.value = this.quantity.print(converted, false);
         }
@@ -142,7 +142,7 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, OnChange
 
     private getInputElement(): HTMLInputElement {
         let input: HTMLInputElement;
-        let element = this.elementRef.nativeElement;
+        const element = this.elementRef.nativeElement;
         if (element.tagName === 'INPUT') {
             input = element;
         }

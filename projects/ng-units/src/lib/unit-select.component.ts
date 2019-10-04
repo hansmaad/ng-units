@@ -1,10 +1,11 @@
-import { ElementRef, Component, Input, HostListener, OnDestroy, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { ElementRef, Component, Input, HostListener, OnDestroy, AfterViewInit, OnChanges, SimpleChanges, } from '@angular/core';
 import { Quantity } from './quantity';
 import { Unit } from './unit';
 import { SystemOfUnits } from './system-of-units.service';
 import { Subscription } from 'rxjs';
 
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: '[ngUnitSelect]',
     template: `<option *ngFor="let u of quantity?.units">{{u.symbol}}</option>`,
 })

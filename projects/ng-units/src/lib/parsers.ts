@@ -1,15 +1,12 @@
-export interface QuantityParser {
-    (value: string|number): number;
-}
+export type QuantityParser = (value: string|number) => number;
 
-export const QuantityParsers: { [name: string] : QuantityParser } = {
+export const QuantityParsers: { [name: string]: QuantityParser } = {
 
-    "default" : function(value: string|number) {
+    'default' : function(value: string|number) {
         if (typeof value === 'string') {
-            var str = value.replace(",", ".");
+            const str = value.replace(',', '.');
             return str === '' ? null : Number(str);
         }
         return value;
     }
-
-}
+};

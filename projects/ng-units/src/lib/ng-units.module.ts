@@ -35,12 +35,12 @@ export class NgUnitsModule {
                     deps: [SYSTEM_OF_UNITS_CONFIGURATION]
                 }
             ]
-        }
+        };
     }
     static forChild(): ModuleWithProviders {
         return {
             ngModule: NgUnitsModule,
             providers: []
-        }
+        };
     }
 }

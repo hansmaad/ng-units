@@ -15,7 +15,7 @@ import { SystemOfUnits } from './system-of-units.service';
     </div>
     `
 })
-class QuantityPipeTestComponent { 
+class QuantityPipeTestComponent {
     value = 1;
     quantity;
 }
@@ -51,39 +51,39 @@ describe('QuantityPipe', () => {
 
     it('should add unit symbol', () => {
         expect(pipe.transform(2, quantity, true)).toBe('2000 mm');
-    })
+    });
 
     it('should return argument if quantity name is not in system of units', () => {
         expect(pipe.transform(2.5, 'length')).toBe(2.5);
-    })
+    });
 
     it('should return string argument if quantity name is not in system of units', () => {
         expect(pipe.transform('2.5', 'length')).toBe('2.5');
-    })
+    });
 
     it('should convert if quantity name is in system of units', () => {
-        let q = new Quantity(length);
+        const q = new Quantity(length);
         systemOfUnits.add(q);
         q.selectUnit('cm');
         expect(pipe.transform(2.5, 'Length')).toBe('250');
-    })
+    });
 
     it('should add unit symbol if quantity name is in system of units', () => {
-        let q = new Quantity(length);
+        const q = new Quantity(length);
         systemOfUnits.add(q);
         q.selectUnit('cm');
         expect(pipe.transform(2.5, 'Length', true)).toBe('250 cm');
-    })
+    });
 
 
     it('should use quantity formatter', () => {
-        quantity.formatter = (v) => v + 'meow'
+        quantity.formatter = (v) => v + 'meow';
         expect(pipe.transform(2, quantity)).toBe('2000meow');
         expect(pipe.transform(2, quantity, true)).toBe('2000meow mm');
-    })
+    });
 
     describe('changeDetection', () => {
-    
+
         let systemQuantity: Quantity;
         let fixture: ComponentFixture<QuantityPipeTestComponent>;
         let byInstance;
@@ -103,7 +103,7 @@ describe('QuantityPipe', () => {
               byInstance = fixture.nativeElement.querySelector('#by-instance');
               byName = fixture.nativeElement.querySelector('#by-name');
         });
-    
+
         it('should render', () => {
             expect(byInstance.textContent).toContain('1');
             expect(byName.textContent).toContain('1');

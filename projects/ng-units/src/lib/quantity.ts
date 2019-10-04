@@ -1,13 +1,13 @@
-import { SimpleUnit, Unit, SimpleUnitDefinition } from "./unit";
-import { QuantityFormatter, QuantityFormatters } from "./formatters";
-import { QuantityParser, QuantityParsers } from "./parsers";
+import { SimpleUnit, Unit } from './unit';
+import { QuantityFormatter, QuantityFormatters } from './formatters';
+import { QuantityParser, QuantityParsers } from './parsers';
 
 
 export interface QuantityDefinition {
     name: string;
-    units: { [symbol: string]: number[] },
-    formatter?: string,
-    parser?: string
+    units: { [symbol: string]: number[] };
+    formatter?: string;
+    parser?: string;
 }
 
 
@@ -21,39 +21,39 @@ export class Quantity {
     constructor(definition?: QuantityDefinition) {
         if (definition) {
             this.name = definition.name;
-            for (let symbol of Object.keys(definition.units)) {
-                let def = definition.units[symbol];
+            for (const symbol of Object.keys(definition.units)) {
+                const def = definition.units[symbol];
                 this.units.push(new SimpleUnit(symbol, def[0], def[1]));
             }
             this.unit = this.units[0];
-            let formatterName = definition.formatter || 'default';
-            let parserName = definition.parser || 'default';
+            const formatterName = definition.formatter || 'default';
+            const parserName = definition.parser || 'default';
             this.formatter = QuantityFormatters[formatterName];
             this.parser = QuantityParsers[parserName];
         }
     }
 
     fromBase(value: string|number): number {
-        var n = this.parser(value);
+        const n = this.parser(value);
         return isNotNumeric(n) ? null : this.unit.fromBase(n);
     }
 
     toBase(value: string|number): number {
-        var n = this.parser(value);
+        const n = this.parser(value);
         return isNotNumeric(n) ? null : this.unit.toBase(n);
     }
 
     selectUnit(unit: string|Unit) {
-        let u = this.findUnit(unit);
+        const u = this.findUnit(unit);
         if (u) {
             this.unit = u;
         }
     }
 
-    findUnit(unit: string|Unit) : Unit {
-        let id = typeof unit === 'string' ? unit : unit.symbol;
-        let units = this.units;
-        for(let i = 0, e = units.length; i != e; i++) {
+    findUnit(unit: string|Unit): Unit {
+        const id = typeof unit === 'string' ? unit : unit.symbol;
+        const units = this.units;
+        for (let i = 0, e = units.length; i !== e; i++) {
             if (units[i].symbol === id) {
                 return units[i];
             }
@@ -65,10 +65,11 @@ export class Quantity {
      * @param value string or number
      */
     print(value: string|number, addUnitSymbol?: boolean) {
-        let number = this.parser(value);
-        if (typeof number !== 'number')
+        const number = this.parser(value);
+        if (typeof number !== 'number') {
             return '';
-        let result = this.formatter(number);
+        }
+        const result = this.formatter(number);
         return addUnitSymbol ? (result + ' ' + this.unit.symbol) : result;
     }
 }

@@ -1,5 +1,5 @@
-import {  Quantity, QuantityDefinition } from "./quantity";
-import { SimpleUnit } from "./unit";
+import {  Quantity, QuantityDefinition } from './quantity';
+import { SimpleUnit } from './unit';
 
 
 describe('Quantity', () => {
@@ -14,17 +14,17 @@ describe('Quantity', () => {
                 'cm' : [100],
                 'ΩΩ' : [10, 10]
             }
-        }
+        };
     });
 
     it('should initialize from definition', () => {
-        let quantity = new Quantity(definition);
+        const quantity = new Quantity(definition);
         expect(quantity.name).toBe('Length');
         expect(quantity.unit.symbol).toBe('m');
     });
 
     it('should select unit by symbol', () => {
-        let quantity = new Quantity(definition);
+        const quantity = new Quantity(definition);
         quantity.selectUnit('cm');
         expect(quantity.unit.symbol).toBe('cm');
         quantity.selectUnit('cm');
@@ -34,14 +34,14 @@ describe('Quantity', () => {
     });
 
     it('should not select unit by inknown symbol', () => {
-        let quantity = new Quantity(definition);
+        const quantity = new Quantity(definition);
         quantity.selectUnit('cm');
         quantity.selectUnit('meow');
         expect(quantity.unit.symbol).toBe('cm');
     });
 
     it('should select unit by instance', () => {
-        let quantity = new Quantity(definition);
+        const quantity = new Quantity(definition);
         quantity.selectUnit(quantity.units[1]);
         expect(quantity.unit.symbol).toBe('cm');
         quantity.selectUnit(quantity.units[1]);
@@ -51,7 +51,7 @@ describe('Quantity', () => {
     });
 
     it('should not select unknown unit instance', () => {
-        let quantity = new Quantity(definition);
+        const quantity = new Quantity(definition);
         quantity.selectUnit('cm');
         quantity.selectUnit(new SimpleUnit('meow', 1));
         expect(quantity.unit.symbol).toBe('cm');
@@ -66,8 +66,8 @@ describe('Quantity', () => {
         });
 
         function expectPrint(value: number, expectedText: string) {
-            var text = quantity.print(value);
-            var regex = expectedText.replace(',', '[,\\.]');
+            const text = quantity.print(value);
+            let regex = expectedText.replace(',', '[,\\.]');
             regex = regex.replace('+', '\\+');
             expect(text).toMatch(new RegExp('^' + regex + '$'));
         }
@@ -121,7 +121,7 @@ describe('Quantity', () => {
 
         it('should use custom formatter', function () {
             quantity.formatter = value => value + 'meow';
-            var text = quantity.print(123);
+            const text = quantity.print(123);
             expect(text).toBe('123meow');
         });
     });
