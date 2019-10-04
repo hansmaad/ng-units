@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer2, OnInit, Component, Input, forwardRef, HostListener, OnDestroy, AfterViewInit } from '@angular/core';
+import { ElementRef, Component, Input, HostListener, OnDestroy, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Quantity } from './quantity';
 import { Unit } from './unit';
 import { SystemOfUnits } from './system-of-units.service';
@@ -8,10 +8,10 @@ import { Subscription } from 'rxjs';
     selector: '[ngUnitSelect]',
     template: `<option *ngFor="let u of quantity?.units">{{u.symbol}}</option>`,
 })
-export class UnitSelectComponent implements OnInit, OnDestroy, AfterViewInit {
+export class UnitSelectComponent implements OnChanges, OnDestroy, AfterViewInit {
 
-    @Input('ngUnitSelect')
-    quantityAttr: string | Quantity;
+    // tslint:disable-next-line:no-input-rename
+    @Input('ngUnitSelect') quantityAttr: string | Quantity;
 
     quantity: Quantity;
 
@@ -23,11 +23,16 @@ export class UnitSelectComponent implements OnInit, OnDestroy, AfterViewInit {
         this.select = elementRef.nativeElement;
     }
 
-    ngOnInit(): void {
-        this.initQuantity();
-        this.subscription = this.system.subscribe(this.quantity, (msg) => {
-            this.selectUnit();
-        })
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['quantityAttr']) {
+            this.initQuantity();
+            if (this.subscription) {
+                this.subscription.unsubscribe();
+            }
+            this.subscription = this.system.subscribe(this.quantity, (msg) => {
+                this.selectUnit();
+            });
+        }
     }
 
     ngAfterViewInit(): void {
@@ -44,15 +49,15 @@ export class UnitSelectComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     private selectUnit() {
-        let quantity = this.quantity;
+        const quantity = this.quantity;
         this.currentUnit = quantity ? quantity.unit : null;
-        this.select.selectedIndex = quantity ? quantity.units.indexOf(this.currentUnit): -1;
+        this.select.selectedIndex = quantity ? quantity.units.indexOf(this.currentUnit) : -1;
     }
 
     @HostListener('change', ['$event'])
     change(event: Event) {
-        let index = this.select.selectedIndex;
-        this.currentUnit = this.quantity.units[index]
+        const index = this.select.selectedIndex;
+        this.currentUnit = this.quantity.units[index];
         this.system.selectUnit(this.quantity, this.currentUnit);
     }
 }
