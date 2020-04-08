@@ -9,7 +9,7 @@
     "build:doc": "npm run build:doc:build && npm run build:doc:copy",
     "build:doc:build": "ng build ng-units-doc --prod --base-href /ng-units/",
     "build:doc:copy": "rimraf ./docs && copyfiles -f ./dist/ng-units-doc/* ./docs",
-    "publish": "npm publish ./dist/ng-units",
+    "release": "npm publish ./dist/ng-units",
     "test": "ng test ng-units",
     "lint": "ng lint",
     "e2e": "ng e2e"
