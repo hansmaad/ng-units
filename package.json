@@ -11,6 +11,7 @@
     "build:doc:copy": "rimraf ./docs && copyfiles -f ./dist/ng-units-doc/* ./docs",
     "release": "npm publish ./dist/ng-units",
     "test": "ng test ng-units",
+    "test:ci": "ng test ng-units --watch=false --browsers=ChromeHeadlessNoSandbox",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
