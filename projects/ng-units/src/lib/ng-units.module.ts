@@ -24,7 +24,7 @@ export const SYSTEM_OF_UNITS_CONFIGURATION = new InjectionToken<SystemOfUnitsCon
     ]
 })
 export class NgUnitsModule {
-    static forRoot(config?: SystemOfUnitsConfig): ModuleWithProviders {
+    static forRoot(config?: SystemOfUnitsConfig): ModuleWithProviders<NgUnitsModule> {
         return {
             ngModule: NgUnitsModule,
             providers: [
@@ -37,7 +37,7 @@ export class NgUnitsModule {
             ]
         };
     }
-    static forChild(): ModuleWithProviders {
+    static forChild(): ModuleWithProviders<NgUnitsModule> {
         return {
             ngModule: NgUnitsModule,
             providers: []

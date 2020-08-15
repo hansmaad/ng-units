@@ -1,4 +1,5 @@
-import { ElementRef, Component, Input, HostListener, OnDestroy, AfterViewInit, OnChanges, SimpleChanges, } from '@angular/core';
+import { OnDestroy, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { ElementRef, Component, Input, HostListener } from '@angular/core';
 import { Quantity } from './quantity';
 import { Unit } from './unit';
 import { SystemOfUnits } from './system-of-units.service';

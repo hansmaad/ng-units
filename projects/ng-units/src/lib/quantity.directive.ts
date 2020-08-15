@@ -1,14 +1,15 @@
 import {
+    OnInit,
+    OnChanges,
+    SimpleChanges,
+    OnDestroy
+} from '@angular/core';
+import {
     Directive,
     ElementRef,
     forwardRef,
     HostListener,
     Input,
-    OnInit,
-    DoCheck,
-    OnChanges,
-    SimpleChanges,
-    OnDestroy
 } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
