@@ -1,6 +1,6 @@
 {
   "name": "ng-units",
-  "version": "10.0.0"
+  "version": "10.0.0-beta.1"
 ,
   "dependencies": {
     "tslib": "^2.0.0"
