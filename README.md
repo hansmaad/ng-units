@@ -1,3 +1,4 @@
+![Build](https://github.com/hansmaad/ng-units/workflows/Build/badge.svg)
 [![npm](https://img.shields.io/npm/v/ng-units.svg)](https://www.npmjs.com/package/ng-units)
 
 # ng-units
