@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Quantity } from './quantity';
 import { Unit } from './unit';
-import { Subscription, Subject } from 'rxjs';
+import { Subscription, Subject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 
@@ -31,6 +31,10 @@ export class SystemOfUnits {
     selectUnit(quantity: Quantity, unit: string|Unit) {
         quantity.selectUnit(unit);
         this.broadcast(quantity);
+    }
+
+    changes(): Observable<QuantityMessage> {
+        return this.quantityChange.asObservable();
     }
 
     subscribe(quantity, callback: (m: QuantityMessage) => any): Subscription {
