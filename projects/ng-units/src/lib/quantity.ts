@@ -71,13 +71,13 @@ export class Quantity {
      * Returns a string containing formatted number and unit symbol (optional).
      * @param value string or number
      */
-    print(value: string|number, addUnitSymbol?: boolean) {
+    print(value: string|number, addUnitSymbol?: boolean, unit?: string|Unit) {
         const number = this.parser(value);
         if (typeof number !== 'number') {
             return '';
         }
         const result = this.formatter(number);
-        return addUnitSymbol ? (result + ' ' + this.unit.symbol) : result;
+        return addUnitSymbol ? (result + ' ' + this.getUnit(unit).symbol) : result;
     }
 }
 

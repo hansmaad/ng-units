@@ -3,6 +3,7 @@ import { QuantityFormatters } from './formatters';
 import { QuantityParsers } from './parsers';
 import { Quantity } from './quantity';
 import { SystemOfUnits } from './system-of-units.service';
+import { Unit } from './unit';
 
 @Pipe({
     name: 'ngQuantity',
@@ -15,15 +16,31 @@ export class QuantityPipe implements PipeTransform {
 
     transform(value: string | number,
         quantity?: Quantity | string,
+        addSymbolOrUnit?: boolean|Unit|string,
         addSymbol?: boolean): any
     {
         if (typeof quantity === 'string') {
             quantity = this.system.get(quantity);
         }
-        if (value === null || value === undefined) {
-            return quantity && addSymbol ? quantity.unit.symbol : '';
+
+        let unit: string|Unit;
+        if (typeof addSymbolOrUnit === 'boolean') {
+            addSymbol = addSymbolOrUnit;
         }
-        return quantity ? quantity.print(quantity.fromBase(value), addSymbol) : print(value);
+        else {
+            unit = addSymbolOrUnit;
+        }
+
+        if (value === null || value === undefined) {
+            if (!quantity || !addSymbol) {
+                return '';
+            }
+            if (unit) {
+                return quantity.findUnit(unit)?.symbol;
+            }
+            return quantity.unit.symbol;
+        }
+        return quantity ? quantity.print(quantity.fromBase(value, unit), addSymbol, unit) : print(value);
     }
 }
 

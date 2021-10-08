@@ -98,6 +98,30 @@ describe('QuantityPipe', () => {
         expect(pipe.transform(2, quantity, true)).toBe('2000meow mm');
     });
 
+    it('should use specific unit by name without symbol', () => {
+        expect(pipe.transform(2, quantity, 'cm')).toBe('200');
+    });
+
+    it('should use specific unit by name with symbol', () => {
+        expect(pipe.transform(2, quantity, 'cm', true)).toBe('200 cm');
+    });
+
+    it('should use specific unit without symbol', () => {
+        expect(pipe.transform(2, quantity, quantity.findUnit('cm'))).toBe('200');
+    });
+
+    it('should use specific unit with symbol', () => {
+        expect(pipe.transform(2, quantity, quantity.findUnit('cm'), true)).toBe('200 cm');
+    });
+
+    it('should print specific unit symbol', () => {
+        expect(pipe.transform(null, quantity, 'cm', true)).toBe('cm');
+    });
+
+    it('should fallback to selected unit if does not exist', () => {
+        expect(pipe.transform(2, quantity, 'cm2', true)).toBe('2000 mm');
+    });
+
     describe('changeDetection', () => {
 
         let systemQuantity: Quantity;
