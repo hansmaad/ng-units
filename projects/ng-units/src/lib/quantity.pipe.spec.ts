@@ -37,8 +37,12 @@ describe('QuantityPipe', () => {
         expect(pipe).toBeTruthy();
     });
 
-    it('should do nothing if quantity is undefined', () => {
-        expect(pipe.transform(2)).toBe(2);
+    it('should do return as string if quantity is undefined', () => {
+        expect(pipe.transform(2)).toBe('2');
+    });
+
+    it('should use default formatter if quantity is undefined', () => {
+        expect(pipe.transform(0.000001)).toBe('1e-6');
     });
 
     it('should convert from base', () => {
@@ -53,8 +57,20 @@ describe('QuantityPipe', () => {
         expect(pipe.transform(2, quantity, true)).toBe('2000 mm');
     });
 
+    it('should add unit symbol to 0', () => {
+        expect(pipe.transform(0, quantity, true)).toBe('0 mm');
+    });
+
+    it('should return unit symbol only if value is undefined', () => {
+        expect(pipe.transform(undefined, quantity, true)).toBe('mm');
+    });
+
+    it('should return unit symbol only if value is null', () => {
+        expect(pipe.transform(null, quantity, true)).toBe('mm');
+    });
+
     it('should return argument if quantity name is not in system of units', () => {
-        expect(pipe.transform(2.5, 'length')).toBe(2.5);
+        expect(pipe.transform(2.5, 'length')).toBe('2.5');
     });
 
     it('should return string argument if quantity name is not in system of units', () => {
