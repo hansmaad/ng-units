@@ -26,6 +26,7 @@ const CONTROL_VALUE_ACCESSOR = {
 };
 
 @Directive({
+    // tslint:disable-next-line:directive-selector
     selector: '[ngQuantity]',
     providers: [
         CONTROL_VALUE_ACCESSOR
@@ -33,11 +34,10 @@ const CONTROL_VALUE_ACCESSOR = {
 })
 export class QuantityDirective implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
 
-    @Input()
-    formControlName: string;
+    /** @deprecated since 11.0.0 */
+    @Input() formControlName: string;
 
-    @Input('ngQuantity')
-    quantityAttr: string | Quantity;
+    @Input('ngQuantity') quantityAttr: string | Quantity;
 
     quantity: Quantity;
 
@@ -67,8 +67,10 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, OnChange
 
     private subscribe() {
         if (this.quantity) {
-            this.subscription = this.system.subscribe(this.quantity, () => {
-                this.updateUnit();
+            this.subscription = this.system.changes$.subscribe(m => {
+                if (m.quantity === this.quantity) {
+                    this.updateUnit();
+                }
             });
         }
     }

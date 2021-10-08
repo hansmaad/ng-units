@@ -31,8 +31,10 @@ export class UnitSelectComponent implements OnChanges, OnDestroy, AfterViewInit 
             if (this.subscription) {
                 this.subscription.unsubscribe();
             }
-            this.subscription = this.system.subscribe(this.quantity, (msg) => {
-                this.selectUnit();
+            this.subscription = this.system.changes$.subscribe((msg) => {
+                if (msg.quantity === this.quantity) {
+                    this.selectUnit();
+                }
             });
         }
     }
