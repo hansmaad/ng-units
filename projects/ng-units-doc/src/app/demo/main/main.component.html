@@ -1,12 +1,35 @@
 <h2>Bootstrap input group</h2>
-<p></p>
+
+<p>
+  This input group is using <code>ngQuantity</code> on the input to automatically
+  convert values to the currently selected unit and <code>ngUnitSelect</code> to
+  easily fill a HTML select with available units.
+</p>
+<pre class="border bg-light py-3 px-2">
+<code>&lt;input [(ngModel)]="value" ngQuantity="Temperature" &gt;</code>
+</pre>
+
 <div class="form-group">
     <label for="todays-temperature">Today's temperature ({{value | ngQuantity:'Temperature':true}})</label>
     <div class="input-group">
-      <input id="todays-temperature" name="todaysTemperature" class="form-control" type="number" readonly 
+      <input id="todays-temperature" name="todaysTemperature" class="form-control" type="number" readonly
              [(ngModel)]="value" ngQuantity="Temperature">
       <div class="input-group-append">
         <select class="custom-select" ngUnitSelect="Temperature"></select>
       </div>
     </div>
 </div>
+
+<p>
+  The next input uses <code>ngUnit</code> to specify a fixed unit. No matter which unit is currently selected for
+  the Temperature quantity, it will always use °C for the conversion.
+</p>
+<pre class="border bg-light py-3 px-2">
+<code>&lt;input [(ngModel)]="value" ngQuantity="Temperature" ngUnit="°C" &gt;</code>
+</pre>
+<div class="form-group">
+  <label for="todays-temperature2">Today's temperature in °C</label>
+  <input id="todays-temperature2" name="todaysTemperature2" class="form-control" type="number" readonly
+         [(ngModel)]="value" ngQuantity="Temperature" ngUnit="°C" >
+</div>
+
