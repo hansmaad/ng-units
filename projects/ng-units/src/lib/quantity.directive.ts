@@ -16,6 +16,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Quantity } from './quantity';
 import { SystemOfUnits } from './system-of-units.service';
 import { Subscription } from 'rxjs';
+import { Unit } from './unit';
 
 
 const CONTROL_VALUE_ACCESSOR = {
@@ -26,6 +27,7 @@ const CONTROL_VALUE_ACCESSOR = {
 };
 
 @Directive({
+    // tslint:disable-next-line:directive-selector
     selector: '[ngQuantity]',
     providers: [
         CONTROL_VALUE_ACCESSOR
@@ -33,18 +35,17 @@ const CONTROL_VALUE_ACCESSOR = {
 })
 export class QuantityDirective implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
 
-    @Input()
-    formControlName: string;
+    /** @deprecated since 11.0.0 */
+    @Input() formControlName: string;
 
-    @Input('ngQuantity')
-    quantityAttr: string | Quantity;
+    @Input('ngQuantity') quantityAttr: string | Quantity;
+    @Input() ngUnit?: string|Unit;
 
     quantity: Quantity;
 
     private inputElement: HTMLInputElement;
     private onTouch: Function;
     private onModelChange: Function;
-    private currentUnit: string;
     private currentModelValue;
     private subscription: Subscription;
 
@@ -67,14 +68,15 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, OnChange
 
     private subscribe() {
         if (this.quantity) {
-            this.subscription = this.system.subscribe(this.quantity, () => {
-                this.updateUnit();
+            this.subscription = this.system.changes$.subscribe(m => {
+                if (m.quantity === this.quantity) {
+                    this.updateUnit();
+                }
             });
         }
     }
 
     private updateUnit() {
-        this.currentUnit = this.quantity ? this.quantity.unit.symbol : '';
         this.updateView(this.currentModelValue);
     }
 
@@ -108,7 +110,7 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, OnChange
     onControlInput($event: KeyboardEvent) {
 
         const rawValue: any = this.inputElement.value;
-        const modelValue = this.quantity ? this.quantity.toBase(rawValue) : rawValue;
+        const modelValue = this.quantity ? this.quantity.toBase(rawValue, this.ngUnit) : rawValue;
         this.currentModelValue = modelValue;
 
         if (this.onTouch) {
@@ -132,7 +134,7 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, OnChange
             this.inputElement.value = modelValue;
             return;
         }
-        const converted = this.quantity.fromBase(modelValue);
+        const converted = this.quantity.fromBase(modelValue, this.ngUnit);
         if (converted !== null && converted !== undefined) {
             this.inputElement.value = this.quantity.print(converted, false);
         }

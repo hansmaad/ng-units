@@ -33,14 +33,18 @@ export class Quantity {
         }
     }
 
-    fromBase(value: string|number): number {
+    fromBase(value: string|number, unit?: Unit|string): number {
         const n = this.parser(value);
-        return isNotNumeric(n) ? null : this.unit.fromBase(n);
+        return isNotNumeric(n) ? null : this.getUnit(unit).fromBase(n);
     }
 
-    toBase(value: string|number): number {
+    toBase(value: string|number, unit?: Unit|string): number {
         const n = this.parser(value);
-        return isNotNumeric(n) ? null : this.unit.toBase(n);
+        return isNotNumeric(n) ? null : this.getUnit(unit).toBase(n);
+    }
+
+    private getUnit(unit?: string|Unit) {
+        return this.findUnit(unit) || this.unit;
     }
 
     selectUnit(unit: string|Unit) {
@@ -50,7 +54,10 @@ export class Quantity {
         }
     }
 
-    findUnit(unit: string|Unit): Unit {
+    findUnit(unit: string|Unit): Unit|undefined {
+        if (!unit) {
+            return;
+        }
         const id = typeof unit === 'string' ? unit : unit.symbol;
         const units = this.units;
         for (let i = 0, e = units.length; i !== e; i++) {

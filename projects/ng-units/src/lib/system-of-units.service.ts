@@ -14,10 +14,9 @@ export class SystemOfUnits {
 
     quantities: Quantity[] = [];
 
-    private quantityChange = new Subject<QuantityMessage>();
+    private readonly quantityChange = new Subject<QuantityMessage>();
+    public readonly changes$ = this.quantityChange.asObservable();
 
-    constructor() {
-    }
 
     add(...quantities: Quantity[]) {
         this.quantities.push(...quantities);
@@ -33,10 +32,16 @@ export class SystemOfUnits {
         this.broadcast(quantity);
     }
 
+    /**
+     * @depracted since 11.0.0. Use changes$ instead.
+     */
     changes(): Observable<QuantityMessage> {
-        return this.quantityChange.asObservable();
+        return this.changes$;
     }
 
+    /**
+     * @depracted since 11.0.0. Use changes$ instead.
+     */
     subscribe(quantity, callback: (m: QuantityMessage) => any): Subscription {
         return this.quantityChange.pipe(
             filter(m => m.quantity === quantity))
