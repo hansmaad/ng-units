@@ -84,3 +84,8 @@ export class Quantity {
 function isNotNumeric(value) {
     return value === null || isNaN(value);
 }
+
+export function defaultPrint(value: string|number): string {
+    const num = QuantityParsers['default'](value);
+    return typeof num === 'number' ? QuantityFormatters['default'](num) : '';
+}

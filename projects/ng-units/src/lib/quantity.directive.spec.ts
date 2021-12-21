@@ -58,6 +58,13 @@ describe('QuantityDirective', () => {
         expect(getValue('#by-instance')).toBe('42');
     });
 
+    it('should use default formatter, if quantity is undefined', async () => {
+        fixture.componentInstance.value = 0.000012;
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(getValue('#by-instance')).toBe('1.2e-5');
+    });
+
     it('should convert from model by instance', async () => {
         fixture.componentInstance.quantity = new Quantity(length);
         fixture.componentInstance.quantity.selectUnit('cm');

@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Quantity } from './quantity';
+import { defaultPrint, Quantity } from './quantity';
 import { SystemOfUnits } from './system-of-units.service';
 import { Subscription } from 'rxjs';
 import { Unit } from './unit';
@@ -131,7 +131,7 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, OnChange
 
     private updateView(modelValue: any) {
         if (!this.quantity) {
-            this.inputElement.value = modelValue;
+            this.inputElement.value = defaultPrint(modelValue);
             return;
         }
         const converted = this.quantity.fromBase(modelValue, this.ngUnit);

@@ -1,7 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { QuantityFormatters } from './formatters';
-import { QuantityParsers } from './parsers';
-import { Quantity } from './quantity';
+import { defaultPrint, Quantity } from './quantity';
 import { SystemOfUnits } from './system-of-units.service';
 import { Unit } from './unit';
 
@@ -40,12 +38,7 @@ export class QuantityPipe implements PipeTransform {
             }
             return quantity.unit.symbol;
         }
-        return quantity ? quantity.print(quantity.fromBase(value, unit), addSymbol, unit) : print(value);
+        return quantity ? quantity.print(quantity.fromBase(value, unit), addSymbol, unit) : defaultPrint(value);
     }
 }
 
-
-function print(value: string|number) {
-    const num = QuantityParsers['default'](value);
-    return QuantityFormatters['default'](num);
-}
