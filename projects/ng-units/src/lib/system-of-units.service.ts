@@ -42,7 +42,7 @@ export class SystemOfUnits {
     /**
      * @depracted since 11.0.0. Use changes$ instead.
      */
-    subscribe(quantity, callback: (m: QuantityMessage) => any): Subscription {
+    subscribe(quantity, callback: (m: QuantityMessage) => unknown): Subscription {
         return this.quantityChange.pipe(
             filter(m => m.quantity === quantity))
             .subscribe(callback);

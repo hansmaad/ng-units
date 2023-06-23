@@ -6,7 +6,7 @@ import { SystemOfUnits } from './system-of-units.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-    // tslint:disable-next-line:component-selector
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: '[ngUnitSelect]',
     template: `<option *ngFor="let u of quantity?.units">{{u.symbol}}</option>`,
 })
@@ -59,7 +59,7 @@ export class UnitSelectComponent implements OnChanges, OnDestroy, AfterViewInit 
     }
 
     @HostListener('change', ['$event'])
-    change(event: Event) {
+    change() {
         const index = this.select.selectedIndex;
         this.currentUnit = this.quantity.units[index];
         this.system.selectUnit(this.quantity, this.currentUnit);

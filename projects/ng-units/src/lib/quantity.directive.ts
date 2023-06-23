@@ -35,18 +35,15 @@ const CONTROL_VALUE_ACCESSOR = {
 })
 export class QuantityDirective implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
 
-    /** @deprecated since 11.0.0 */
-    @Input() formControlName: string;
-
     @Input('ngQuantity') quantityAttr: string | Quantity;
     @Input() ngUnit?: string|Unit;
 
     quantity: Quantity;
 
     private inputElement: HTMLInputElement;
-    private onTouch: Function;
-    private onModelChange: Function;
-    private currentModelValue;
+    private onTouch: () => void;
+    private onModelChange: (value: string|number) => void;
+    private currentModelValue: string|number;
     private subscription: Subscription;
 
     constructor(private elementRef: ElementRef, private system: SystemOfUnits) {
@@ -97,19 +94,19 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, OnChange
         }
     }
 
-    registerOnTouched(fn) {
+    registerOnTouched(fn: () => void) {
         this.onTouch = fn;
     }
 
-    registerOnChange(fn) {
+    registerOnChange(fn: (value: string|number) => void) {
         this.onModelChange = fn;
     }
 
     // Parser: View to Model
     @HostListener('input', ['$event'])
-    onControlInput($event: KeyboardEvent) {
+    onControlInput() {
 
-        const rawValue: any = this.inputElement.value;
+        const rawValue = this.inputElement.value;
         const modelValue = this.quantity ? this.quantity.toBase(rawValue, this.ngUnit) : rawValue;
         this.currentModelValue = modelValue;
 
@@ -124,12 +121,12 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, OnChange
 
 
     // Formatter: Model to View
-    writeValue(rawValue: any): void {
+    writeValue(rawValue: string|number): void {
         this.currentModelValue = rawValue;
         this.updateView(rawValue);
     }
 
-    private updateView(modelValue: any) {
+    private updateView(modelValue: string|number) {
         if (!this.quantity) {
             this.inputElement.value = defaultPrint(modelValue);
             return;
