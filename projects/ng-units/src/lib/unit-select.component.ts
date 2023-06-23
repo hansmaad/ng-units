@@ -1,4 +1,4 @@
-import { OnDestroy, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { OnDestroy, AfterViewInit } from '@angular/core';
 import { ElementRef, Component, Input, HostListener } from '@angular/core';
 import { Quantity } from './quantity';
 import { Unit } from './unit';
@@ -10,10 +10,22 @@ import { Subscription } from 'rxjs';
     selector: '[ngUnitSelect]',
     template: `<option *ngFor="let u of quantity?.units">{{u.symbol}}</option>`,
 })
-export class UnitSelectComponent implements OnChanges, OnDestroy, AfterViewInit {
+export class UnitSelectComponent implements OnDestroy, AfterViewInit {
 
     // tslint:disable-next-line:no-input-rename
-    @Input('ngUnitSelect') quantityAttr: string | Quantity;
+    @Input('ngUnitSelect') set quantityAttr(value: string | Quantity) {
+
+        this.initQuantity(value);
+        setTimeout(() => this.selectUnit(), 0);
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+        this.subscription = this.system.changes$.subscribe((msg) => {
+            if (msg.quantity === this.quantity) {
+                this.selectUnit();
+            }
+        });
+    }
 
     quantity: Quantity;
 
@@ -25,20 +37,6 @@ export class UnitSelectComponent implements OnChanges, OnDestroy, AfterViewInit 
         this.select = elementRef.nativeElement;
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes['quantityAttr']) {
-            this.initQuantity();
-            if (this.subscription) {
-                this.subscription.unsubscribe();
-            }
-            this.subscription = this.system.changes$.subscribe((msg) => {
-                if (msg.quantity === this.quantity) {
-                    this.selectUnit();
-                }
-            });
-        }
-    }
-
     ngAfterViewInit(): void {
         this.selectUnit();
     }
@@ -47,9 +45,8 @@ export class UnitSelectComponent implements OnChanges, OnDestroy, AfterViewInit 
         this.subscription.unsubscribe();
     }
 
-    private initQuantity() {
-        this.quantity = typeof this.quantityAttr === 'string' ?
-            this.system.get(this.quantityAttr) : this.quantityAttr;
+    private initQuantity(quantity: string | Quantity) {
+        this.quantity = typeof quantity === 'string' ? this.system.get(quantity) : quantity;
     }
 
     private selectUnit() {

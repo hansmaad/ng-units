@@ -10,7 +10,7 @@ import { Quantity } from './quantity';
 
 
 @Component({
-  template: `
+    template: `
   <select [ngUnitSelect]="quantity"></select>`
 })
 class UnitSelectTestComponent {
@@ -19,87 +19,101 @@ class UnitSelectTestComponent {
 
 describe('UnitSelectComponent', () => {
 
-  let fixture: ComponentFixture<UnitSelectTestComponent>;
-  let component: UnitSelectTestComponent;
-  let select: DebugElement;
-  let systemOfUnits: SystemOfUnits;
-  let quantity: Quantity;
-  let otherQuantity: Quantity;
+    let fixture: ComponentFixture<UnitSelectTestComponent>;
+    let component: UnitSelectTestComponent;
+    let select: DebugElement;
+    let systemOfUnits: SystemOfUnits;
+    let quantity: Quantity;
+    let otherQuantity: Quantity;
 
-  beforeEach(async(() => {
-    systemOfUnits = new SystemOfUnits();
-  }));
+    beforeEach(async(() => {
+        systemOfUnits = new SystemOfUnits();
+    }));
 
-  function create() {
-    fixture = TestBed.configureTestingModule({
-      imports: [FormsModule],
-      declarations: [ UnitSelectComponent, UnitSelectTestComponent ],
-      providers: [{
-        provide: SystemOfUnits,
-        useValue: systemOfUnits
-      }]
-    })
-    .createComponent(UnitSelectTestComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-    select = fixture.debugElement.query(By.css('select'));
-  }
+    function create() {
+        fixture = TestBed.configureTestingModule({
+            imports: [FormsModule],
+            declarations: [UnitSelectComponent, UnitSelectTestComponent],
+            providers: [{
+                provide: SystemOfUnits,
+                useValue: systemOfUnits
+            }]
+        })
+            .createComponent(UnitSelectTestComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+        select = fixture.debugElement.query(By.css('select'));
+    }
 
-  describe('with Length instance', () => {
-    beforeEach(() => {
-      quantity = new Quantity(length);
-      otherQuantity = new Quantity(pressure);
-      systemOfUnits.add(quantity);
-      systemOfUnits.add(otherQuantity);
-      systemOfUnits.selectUnit(quantity, 'cm');
-      create();
+    describe('with Length instance', () => {
+        beforeEach(() => {
+            quantity = new Quantity(length);
+            otherQuantity = new Quantity(pressure);
+            systemOfUnits.add(quantity);
+            systemOfUnits.add(otherQuantity);
+            systemOfUnits.selectUnit(quantity, 'cm');
+            create();
+        });
+
+        it('should create', () => {
+            expect(select.nativeElement.tagName).toBe('SELECT');
+        });
+
+        it('should add units', () => {
+            const options = [].slice.call(select.nativeElement.options);
+            expect(options.map(x => x.innerHTML)).toEqual(quantity.units.map(u => u.symbol));
+        });
+
+        it('should show selected unit', () => {
+            const options = select.nativeElement.options;
+            expect(options[select.nativeElement.selectedIndex].text).toBe('cm');
+        });
+
+        it('should select unit', () => {
+            selectUnitByIndex(0);
+            expect(quantity.unit.symbol).toBe('m');
+        });
+
+        it('should update selected unit', () => {
+            systemOfUnits.selectUnit(quantity, 'mm');
+            fixture.detectChanges();
+            const options = select.nativeElement.options;
+            expect(options[select.nativeElement.selectedIndex].text).toBe('mm');
+        });
+
+        it('should update quantity', () => {
+            component.quantity = otherQuantity.name;
+            fixture.detectChanges();
+            const options = [].slice.call(select.nativeElement.options);
+            expect(options.map(x => x.innerHTML)).toEqual(otherQuantity.units.map(u => u.symbol));
+        });
+
+        it('should update unit when quantity changed', async () => {
+            selectUnitByIndex(0);
+            otherQuantity.selectUnit('mbar');
+            component.quantity = otherQuantity.name;
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const options = select.nativeElement.options;
+            expect(options[select.nativeElement.selectedIndex].text).toBe('mbar');
+        });
+
+        const selectUnitByIndex = (index: number) => {
+            select.nativeElement.selectedIndex = index;
+            select.triggerEventHandler('change', {});
+            fixture.detectChanges();
+        }
     });
 
-    it('should create', () => {
-      expect(select.nativeElement.tagName).toBe('SELECT');
-    });
+    describe('with unknown quanity', () => {
+        beforeEach(() => {
+            create();
+        });
 
-    it('should add units', () => {
-      const options = [].slice.call(select.nativeElement.options);
-      expect(options.map(x => x.innerHTML)).toEqual(quantity.units.map(u => u.symbol));
+        it('should init to empty', () => {
+            expect(select.nativeElement.options.length).toBe(0);
+        });
     });
-
-    it('should show selected unit', () => {
-      const options = select.nativeElement.options;
-      expect(options[select.nativeElement.selectedIndex].text).toBe('cm');
-    });
-
-    it('should select unit', () => {
-      select.nativeElement.selectedIndex = 0;
-      select.triggerEventHandler('change', {});
-      fixture.detectChanges();
-      expect(quantity.unit.symbol).toBe('m');
-    });
-
-    it('should update selected unit', () => {
-      systemOfUnits.selectUnit(quantity, 'mm');
-      fixture.detectChanges();
-      const options = select.nativeElement.options;
-      expect(options[select.nativeElement.selectedIndex].text).toBe('mm');
-    });
-
-    it('should update quantity', () => {
-      component.quantity = otherQuantity.name;
-      fixture.detectChanges();
-      const options = [].slice.call(select.nativeElement.options);
-      expect(options.map(x => x.innerHTML)).toEqual(otherQuantity.units.map(u => u.symbol));
-    });
-  });
-
-  describe('with unknown quanity', () => {
-    beforeEach(() => {
-      create();
-    });
-
-    it('should init to empty', () => {
-      expect(select.nativeElement.options.length).toBe(0);
-    });
-  });
 
 
 });
