@@ -1,4 +1,4 @@
-import { OnDestroy, AfterViewInit } from '@angular/core';
+import { OnDestroy, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { ElementRef, Component, Input, HostListener } from '@angular/core';
 import { Quantity } from './quantity';
 import { Unit } from './unit';
@@ -26,10 +26,11 @@ export class UnitSelectComponent implements OnDestroy, AfterViewInit {
             }
         });
     }
+    @Output() changeUnit = new EventEmitter<Unit>();
 
     quantity: Quantity;
 
-    private currentUnit: Unit;
+    private currentUnit?: Unit|null;
     private select: HTMLSelectElement;
     private subscription: Subscription;
 
@@ -58,8 +59,10 @@ export class UnitSelectComponent implements OnDestroy, AfterViewInit {
     @HostListener('change', ['$event'])
     change() {
         const index = this.select.selectedIndex;
-        this.currentUnit = this.quantity.units[index];
-        this.system.selectUnit(this.quantity, this.currentUnit);
+        const unit = this.quantity.units[index];
+        this.currentUnit = unit;
+        this.system.selectUnit(this.quantity, unit);
+        this.changeUnit.emit(unit);
     }
 }
 

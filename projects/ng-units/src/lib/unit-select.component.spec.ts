@@ -1,5 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UnitSelectComponent } from './unit-select.component';
 import { length, pressure } from './quantities';
 import { FormsModule } from '@angular/forms';
@@ -7,14 +6,15 @@ import { SystemOfUnits } from './system-of-units.service';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Quantity } from './quantity';
+import { Unit } from './unit';
 
 
 @Component({
-    template: `
-  <select [ngUnitSelect]="quantity"></select>`
+    template: `<select [ngUnitSelect]="quantity" (changeUnit)="unit = $event"></select>`
 })
 class UnitSelectTestComponent {
     quantity = 'Length';
+    unit?: Unit;
 }
 
 describe('UnitSelectComponent', () => {
@@ -26,9 +26,9 @@ describe('UnitSelectComponent', () => {
     let quantity: Quantity;
     let otherQuantity: Quantity;
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         systemOfUnits = new SystemOfUnits();
-    }));
+    });
 
     function create() {
         fixture = TestBed.configureTestingModule({
@@ -72,6 +72,11 @@ describe('UnitSelectComponent', () => {
         it('should select unit', () => {
             selectUnitByIndex(0);
             expect(quantity.unit.symbol).toBe('m');
+        });
+
+        it('should emit changeUnit', () => {
+            selectUnitByIndex(1);
+            expect(component.unit.symbol).toBe('cm');
         });
 
         it('should update selected unit', () => {
