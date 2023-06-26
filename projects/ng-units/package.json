@@ -1,7 +1,16 @@
 {
   "name": "ng-units",
-  "version": "16.0.0",
+  "version": "16.0.1",
+  "license": "MIT",
+  "description": "Angular component library for units of measurement.",
+  "keywords": ["Angular", "Library"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hansmaad/ng-units"
+  },
   "dependencies": {
     "tslib": "^2.0.0"
   }
 }
+
+
