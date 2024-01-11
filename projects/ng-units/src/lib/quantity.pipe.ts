@@ -12,16 +12,16 @@ export class QuantityPipe implements PipeTransform {
     constructor(private system: SystemOfUnits) {
     }
 
-    transform(value: string | number,
+    transform(value: string | number | null | undefined,
         quantity?: Quantity | string,
         addSymbolOrUnit?: boolean|Unit|string,
-        addSymbol?: boolean): string
+        addSymbol?: boolean): string|undefined
     {
         if (typeof quantity === 'string') {
             quantity = this.system.get(quantity);
         }
 
-        let unit: string|Unit;
+        let unit: string|Unit|undefined;
         if (typeof addSymbolOrUnit === 'boolean') {
             addSymbol = addSymbolOrUnit;
         }

@@ -22,6 +22,7 @@ describe('UnitSelectComponent', () => {
     let fixture: ComponentFixture<UnitSelectTestComponent>;
     let component: UnitSelectTestComponent;
     let select: DebugElement;
+    let selectElement: HTMLSelectElement;
     let systemOfUnits: SystemOfUnits;
     let quantity: Quantity;
     let otherQuantity: Quantity;
@@ -43,6 +44,7 @@ describe('UnitSelectComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         select = fixture.debugElement.query(By.css('select'));
+        selectElement = select.nativeElement as HTMLSelectElement;
     }
 
     describe('with Length instance', () => {
@@ -60,7 +62,7 @@ describe('UnitSelectComponent', () => {
         });
 
         it('should add units', () => {
-            const options = [].slice.call(select.nativeElement.options);
+            const options = Array.from(selectElement.options);
             expect(options.map(x => x.innerHTML)).toEqual(quantity.units.map(u => u.symbol));
         });
 
@@ -76,7 +78,7 @@ describe('UnitSelectComponent', () => {
 
         it('should emit changeUnit', () => {
             selectUnitByIndex(1);
-            expect(component.unit.symbol).toBe('cm');
+            expect(component?.unit?.symbol).toBe('cm');
         });
 
         it('should update selected unit', () => {
@@ -89,7 +91,7 @@ describe('UnitSelectComponent', () => {
         it('should update quantity', () => {
             component.quantity = otherQuantity.name;
             fixture.detectChanges();
-            const options = [].slice.call(select.nativeElement.options);
+            const options = Array.from(selectElement.options);
             expect(options.map(x => x.innerHTML)).toEqual(otherQuantity.units.map(u => u.symbol));
         });
 
@@ -99,7 +101,7 @@ describe('UnitSelectComponent', () => {
             component.quantity = otherQuantity.name;
             fixture.detectChanges();
             await fixture.whenStable();
-            const options = select.nativeElement.options;
+            const options = selectElement.options;
             expect(options[select.nativeElement.selectedIndex].text).toBe('mbar');
         });
 

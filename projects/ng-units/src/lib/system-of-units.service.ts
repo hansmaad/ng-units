@@ -6,7 +6,7 @@ import { filter } from 'rxjs/operators';
 
 
 export class QuantityMessage {
-    quantity: Quantity;
+    quantity?: Quantity;
 }
 
 @Injectable()
@@ -22,7 +22,7 @@ export class SystemOfUnits {
         this.quantities.push(...quantities);
     }
 
-    get(quantityName: string): Quantity {
+    get(quantityName: string): Quantity|undefined {
         const quantity = this.quantities.find(q => q.name === quantityName);
         return quantity;
     }
@@ -42,7 +42,7 @@ export class SystemOfUnits {
     /**
      * @depracted since 11.0.0. Use changes$ instead.
      */
-    subscribe(quantity, callback: (m: QuantityMessage) => unknown): Subscription {
+    subscribe(quantity: Quantity, callback: (m: QuantityMessage) => unknown): Subscription {
         return this.quantityChange.pipe(
             filter(m => m.quantity === quantity))
             .subscribe(callback);

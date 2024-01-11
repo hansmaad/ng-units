@@ -35,16 +35,16 @@ const CONTROL_VALUE_ACCESSOR = {
 })
 export class QuantityDirective implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
 
-    @Input('ngQuantity') quantityAttr: string | Quantity;
+    @Input('ngQuantity') quantityAttr?: string | Quantity;
     @Input() ngUnit?: string|Unit;
 
-    quantity: Quantity;
+    quantity?: Quantity;
 
-    private inputElement: HTMLInputElement;
-    private onTouch: () => void;
-    private onModelChange: (value: string|number) => void;
-    private currentModelValue: string|number;
-    private subscription: Subscription;
+    private inputElement!: HTMLInputElement;
+    private onTouch?: () => void;
+    private onModelChange?: (value: string|number|undefined|null) => void;
+    private currentModelValue?: string|number|null;
+    private subscription?: Subscription;
 
     constructor(private elementRef: ElementRef, private system: SystemOfUnits) {
 
@@ -98,7 +98,7 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, OnChange
         this.onTouch = fn;
     }
 
-    registerOnChange(fn: (value: string|number) => void) {
+    registerOnChange(fn: (value: string|number|undefined|null) => void) {
         this.onModelChange = fn;
     }
 
@@ -126,7 +126,7 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, OnChange
         this.updateView(rawValue);
     }
 
-    private updateView(modelValue: string|number) {
+    private updateView(modelValue: string|number|undefined|null) {
         if (!this.quantity) {
             this.inputElement.value = defaultPrint(modelValue);
             return;
@@ -136,7 +136,8 @@ export class QuantityDirective implements ControlValueAccessor, OnInit, OnChange
             this.inputElement.value = this.quantity.print(converted, false);
         }
         else {
-            this.inputElement.value = null;
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            this.inputElement.value = null!;
         }
     }
 

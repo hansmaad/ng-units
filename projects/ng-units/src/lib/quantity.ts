@@ -12,11 +12,11 @@ export interface QuantityDefinition {
 
 
 export class Quantity {
-    name: string;
-    unit: Unit;
+    name!: string;
+    unit!: Unit;
     units: Unit[] = [];
-    formatter: QuantityFormatter;
-    parser: QuantityParser;
+    formatter!: QuantityFormatter;
+    parser!: QuantityParser;
 
     constructor(definition?: QuantityDefinition) {
         if (definition) {
@@ -33,28 +33,28 @@ export class Quantity {
         }
     }
 
-    fromBase(value: string|number, unit?: Unit|string): number {
+    fromBase(value: string|number|undefined|null, unit?: Unit|string): number|null {
         const n = this.parser(value);
-        return isNotNumeric(n) ? null : this.getUnit(unit).fromBase(n);
+        return isNumeric(n) ? this.getUnit(unit).fromBase(n) : null;
     }
 
-    toBase(value: string|number, unit?: Unit|string): number {
+    toBase(value: string|number|null|undefined, unit?: Unit|string): number|null {
         const n = this.parser(value);
-        return isNotNumeric(n) ? null : this.getUnit(unit).toBase(n);
+        return isNumeric(n) ? this.getUnit(unit).toBase(n) : null;
     }
 
     private getUnit(unit?: string|Unit) {
         return this.findUnit(unit) || this.unit;
     }
 
-    selectUnit(unit: string|Unit) {
+    selectUnit(unit?: string|Unit|null) {
         const u = this.findUnit(unit);
         if (u) {
             this.unit = u;
         }
     }
 
-    findUnit(unit: string|Unit): Unit|undefined {
+    findUnit(unit?: string|Unit|null): Unit|undefined {
         if (!unit) {
             return;
         }
@@ -71,7 +71,7 @@ export class Quantity {
      * Returns a string containing formatted number and unit symbol (optional).
      * @param value string or number
      */
-    print(value: string|number, addUnitSymbol?: boolean, unit?: string|Unit) {
+    print(value: string|number|null|undefined, addUnitSymbol?: boolean, unit?: string|Unit) {
         const number = this.parser(value);
         if (typeof number !== 'number') {
             return '';
@@ -81,11 +81,11 @@ export class Quantity {
     }
 }
 
-function isNotNumeric(value) {
-    return value === null || isNaN(value);
+function isNumeric(value: unknown): value is number {
+    return typeof value === 'number' && !isNaN(value);
 }
 
-export function defaultPrint(value: string|number): string {
+export function defaultPrint(value: string|number|undefined|null): string {
     const num = QuantityParsers['default'](value);
     return typeof num === 'number' ? QuantityFormatters['default'](num) : '';
 }

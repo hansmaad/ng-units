@@ -4,7 +4,7 @@ export type QuantityFormatter = (value: number) => string;
 export const QuantityFormatters: { [name: string]: QuantityFormatter } = {
     'default': function (value: number): string {
         const abs = Math.abs(value);
-        let text;
+        let text: string;
         if (abs && (abs >= 1e5 || abs <= 1e-2)) {
             text = removeZeroDigits(value.toExponential(3));
         }

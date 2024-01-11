@@ -22,7 +22,7 @@ import { Unit } from './unit';
 })
 class QuantityDirectiveTestComponent {
     value = 1;
-    quantity: Quantity;
+    quantity?: Quantity;
     unit: string|Unit = '';
 }
 
@@ -41,7 +41,7 @@ describe('QuantityDirective', () => {
         units = TestBed.inject(SystemOfUnits);
         units.add(new Quantity(length));
         units.add(new Quantity(area));
-        units.get('Length').selectUnit('cm');
+        units.get('Length')?.selectUnit('cm');
 
         fixture = TestBed.createComponent(QuantityDirectiveTestComponent);
         fixture.detectChanges();
@@ -115,7 +115,7 @@ describe('QuantityDirective', () => {
     });
 
     it('should convert back using unit instance binding', async () => {
-        fixture.componentInstance.unit = units.get('Length').findUnit('mm');
+        fixture.componentInstance.unit = units.get('Length')?.findUnit('mm') || '';
         fixture.detectChanges();
         await fixture.whenStable();
         await set('#with-unit-binding', 1200);

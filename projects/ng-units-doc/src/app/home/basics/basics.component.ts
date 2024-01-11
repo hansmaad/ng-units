@@ -9,7 +9,7 @@ import { systemOfUnitsInitializer } from '../../system-of-units-initializer';
 })
 export class BasicsComponent implements OnInit {
 
-    length: Quantity;
+    length?: Quantity;
     quantity = new Quantity(length);
     value = 1.25;
 

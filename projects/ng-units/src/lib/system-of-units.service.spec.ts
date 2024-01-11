@@ -24,7 +24,9 @@ describe('QuantityService', () => {
             sub.unsubscribe();
             done();
         });
-        systemOfUnits.selectUnit(l, 'mm');
+        if (l) {
+            systemOfUnits.selectUnit(l, 'mm');
+        }
     });
 
 });

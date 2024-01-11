@@ -28,22 +28,22 @@ export class UnitSelectComponent implements OnDestroy, AfterViewInit {
     }
     @Output() changeUnit = new EventEmitter<Unit>();
 
-    quantity: Quantity;
+    quantity?: Quantity;
 
     private currentUnit?: Unit|null;
     private select: HTMLSelectElement;
-    private subscription: Subscription;
+    private subscription?: Subscription;
 
     constructor(elementRef: ElementRef, private system: SystemOfUnits) {
         this.select = elementRef.nativeElement;
     }
 
-    ngAfterViewInit(): void {
+    ngAfterViewInit() {
         this.selectUnit();
     }
 
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+    ngOnDestroy() {
+        this.subscription?.unsubscribe();
     }
 
     private initQuantity(quantity: string | Quantity) {
@@ -53,11 +53,14 @@ export class UnitSelectComponent implements OnDestroy, AfterViewInit {
     private selectUnit() {
         const quantity = this.quantity;
         this.currentUnit = quantity ? quantity.unit : null;
-        this.select.selectedIndex = quantity ? quantity.units.indexOf(this.currentUnit) : -1;
+        this.select.selectedIndex = (this.currentUnit && quantity) ? quantity.units.indexOf(this.currentUnit) : -1;
     }
 
     @HostListener('change', ['$event'])
     change() {
+        if (!this.quantity) {
+            return;
+        }
         const index = this.select.selectedIndex;
         const unit = this.quantity.units[index];
         this.currentUnit = unit;

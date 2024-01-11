@@ -1,4 +1,4 @@
-import {  Quantity, QuantityDefinition } from './quantity';
+import { Quantity, QuantityDefinition } from './quantity';
 import { SimpleUnit } from './unit';
 
 
@@ -10,9 +10,9 @@ describe('Quantity', () => {
         definition = {
             name: 'Length',
             units: {
-                'm' : [1],
-                'cm' : [100],
-                'ΩΩ' : [10, 10]
+                'm': [1],
+                'cm': [100],
+                'ΩΩ': [10, 10]
             }
         };
     });
@@ -175,6 +175,11 @@ describe('Quantity', () => {
             expect(quantity.toBase('2.0e-02')).toBe(2e-4);
             expect(quantity.toBase('2,0e-02')).toBe(2e-4);
         });
+
+        it('should use a custom parser', () => {
+            quantity.parser = value => +(value || 0) * 2;
+            expect(quantity.toBase('2')).toBe(0.04);
+        });
     });
 
     describe('fromBase', function () {
@@ -222,6 +227,60 @@ describe('Quantity', () => {
             expect(quantity.fromBase('2,0e-2')).toBe(2);
             expect(quantity.fromBase('2.0e-02')).toBe(2);
             expect(quantity.fromBase('2,0e-02')).toBe(2);
+        });
+
+        it('should use a custom parser', () => {
+            quantity.parser = value => {
+                if (value === '2') {
+                    return 222;
+                }
+                return null;
+            };
+            const value = quantity.fromBase('2');
+            expect(value).toBe(22200);
+        });
+    });
+
+    describe('findUnit', () => {
+        let quantity: Quantity;
+
+        beforeEach(() => {
+            // Create a new instance of Quantity for each test case
+            quantity = new Quantity();
+            quantity.units = [
+                new SimpleUnit('m', 1, 0),
+                new SimpleUnit('cm', 0.01, 0),
+                new SimpleUnit('ft', 0.3048, 0),
+            ];
+        });
+
+        it('should return undefined if no unit is provided', () => {
+            const result = quantity.findUnit(undefined);
+            expect(result).toBeUndefined();
+        });
+
+        it('should return the unit if it exists in the units array', () => {
+            const unit = new SimpleUnit('m', 1, 0);
+            const result = quantity.findUnit(unit);
+            expect(result).toEqual(unit);
+        });
+
+        it('should return undefined if the unit does not exist in the units array', () => {
+            const unit = new SimpleUnit('km', 1000, 0);
+            const result = quantity.findUnit(unit);
+            expect(result).toBeUndefined();
+        });
+
+        it('should return the unit with the matching symbol', () => {
+            const symbol = 'ft';
+            const result = quantity.findUnit(symbol);
+            expect(result?.symbol).toEqual(symbol);
+        });
+
+        it('should return undefined if the unit symbol is an empty string', () => {
+            const symbol = '';
+            const result = quantity.findUnit(symbol);
+            expect(result).toBeUndefined();
         });
     });
 });

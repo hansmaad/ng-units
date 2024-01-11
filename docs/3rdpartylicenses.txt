@@ -40,6 +40,7 @@ THE SOFTWARE.
 
 
 ng-units
+MIT
 MIT License
 
 Copyright (c) 2018 Hannes Kamecke

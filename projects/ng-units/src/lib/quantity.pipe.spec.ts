@@ -17,7 +17,7 @@ import { SystemOfUnits } from './system-of-units.service';
 })
 class QuantityPipeTestComponent {
     value = 1;
-    quantity;
+    quantity?: Quantity|string;
 }
 
 describe('QuantityPipe', () => {
@@ -126,8 +126,8 @@ describe('QuantityPipe', () => {
 
         let systemQuantity: Quantity;
         let fixture: ComponentFixture<QuantityPipeTestComponent>;
-        let byInstance;
-        let byName;
+        let byInstance: Element;
+        let byName: Element;
         beforeEach(() => {
             systemQuantity = new Quantity(length);
             systemOfUnits.add(systemQuantity);
